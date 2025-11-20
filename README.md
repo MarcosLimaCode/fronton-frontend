@@ -1,16 +1,18 @@
-# React + Vite
+# Fronton
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Agregador de notícias com foco em personalização de temas e leitura simplificada.  
+O objetivo é oferecer uma experiência limpa, onde o usuário escolhe os assuntos de interesse e recebe notícias filtradas automaticamente.
 
-Currently, two official plugins are available:
+## Status do projeto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Atualmente em fase de protótipo.
 
-## React Compiler
+## Protótipo (Figma)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+[Visualizar no Figma](https://www.figma.com/design/OvIARZ21I2eJkMNn0MhocX/Fronton?node-id=0-1&t=rONxOFMZy0g8KY19-1)
 
-## Expanding the ESLint configuration
+## Stack prevista
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+React  
+Node  
+Postgres
