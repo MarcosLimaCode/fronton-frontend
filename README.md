@@ -5,11 +5,15 @@ O objetivo é oferecer uma experiência limpa, onde o usuário escolhe os assunt
 
 ## Status do projeto
 
-Atualmente em fase de protótipo.
+Atualmente em fase de desenvolvimento.
 
 ## Protótipo (Figma)
 
-[Visualizar no Figma](https://www.figma.com/design/OvIARZ21I2eJkMNn0MhocX/Fronton?node-id=0-1&t=rONxOFMZy0g8KY19-1)
+https://www.figma.com/design/OvIARZ21I2eJkMNn0MhocX/Fronton?node-id=0-1&t=rONxOFMZy0g8KY19-1
+
+## Deploy (Vercel)
+
+https://fronton-project.vercel.app
 
 ## Stack prevista
 
