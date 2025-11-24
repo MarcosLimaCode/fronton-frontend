@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Title from "../components/Title";
 import Update from "../components/Update";
+import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
@@ -11,7 +12,13 @@ export default function Home() {
       </Header>
       <Body>
         <LeftSide>
-          <MainBox></MainBox>
+          <MainBox>
+            <ToNews to="/1">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit
+              consectetur adipiscing.
+            </ToNews>
+            <p>CNN Brasil</p>
+          </MainBox>
           <FirstCollummn>
             <SmallBox></SmallBox>
             <SmallBox></SmallBox>
@@ -59,9 +66,30 @@ const Body = styled.div`
 const MainBox = styled.div`
   height: 307px;
   width: 482px;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: start;
   margin-bottom: 18px;
   border-radius: 8px;
   background-color: #282828;
+
+  p {
+    font-family: "Chivo Mono", monospace;
+    font-size: 12px;
+    color: #656363;
+    margin-bottom: 24px;
+    margin-left: 15px;
+  }
+`;
+
+const ToNews = styled(Link)`
+  font-family: "Merriweather", serif;
+  font-style: italic;
+  font-size: 20px;
+  color: white;
+  padding: 0px 15px 10px 15px;
+  text-decoration: none;
 `;
 
 const LeftSide = styled.div`

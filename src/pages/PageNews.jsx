@@ -106,9 +106,10 @@ const NewsTitle = styled.div`
 
   h1 {
     font-style: italic;
-    font-size: 15px;
+    font-weight: bold;
+    font-size: 25px;
     color: white;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
 
   h2 {
@@ -123,7 +124,8 @@ const Text = styled.div`
   margin-right: 84px;
 
   p {
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 100;
     color: white;
     margin-bottom: 16px;
     line-height: 1.6;

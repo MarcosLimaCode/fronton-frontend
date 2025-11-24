@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Title() {
   return (
     <Container>
-      <h1>Fronton</h1>
+      <ToHome to="/">
+        <h1>Fronton</h1>
+      </ToHome>
     </Container>
   );
 }
@@ -25,4 +28,8 @@ const Container = styled.div`
     font-size: 12px;
     color: #656363;
   }
+`;
+
+const ToHome = styled(Link)`
+  text-decoration: none;
 `;
