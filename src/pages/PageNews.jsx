@@ -94,6 +94,7 @@ const Body = styled.div`
   flex-direction: column;
   align-items: start;
   border-radius: 8px;
+  padding-bottom: 24px;
   background-color: #282828;
 `;
 
