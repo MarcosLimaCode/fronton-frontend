@@ -1,10 +1,14 @@
 import styled from "styled-components";
-import Header from "../components/Header";
+import Title from "../components/Title";
+import Update from "../components/Update";
 
 export default function Home() {
   return (
     <Container>
-      <Header />
+      <Header>
+        <Title />
+        <Update />
+      </Header>
       <Body>
         <LeftSide>
           <MainBox></MainBox>
@@ -35,6 +39,14 @@ const Container = styled.div`
   min-height: 100vh;
   width: 100vw;
   background-color: #202020;
+`;
+
+const Header = styled.div`
+  height: 70px;
+  width: 821px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const Body = styled.div`

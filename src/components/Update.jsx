@@ -1,17 +1,14 @@
 import styled from "styled-components";
 
-export default function Header() {
+export default function Update() {
   return (
     <Container>
-      <h1>Fronton</h1>
       <p>Última atualização: 20 de novembro às 16:36</p>
     </Container>
   );
 }
 
 const Container = styled.div`
-  height: 70px;
-  width: 821px;
   display: flex;
   justify-content: space-between;
   align-items: end;
