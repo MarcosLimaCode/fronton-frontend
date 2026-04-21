@@ -1,9 +1,13 @@
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Update() {
+  const location = useLocation();
+  const dateFormatted = location.state?.dateFormatted;
+
   return (
     <Container>
-      <p>Última atualização: 20 de novembro às 16:36</p>
+      <p>Última atualização: {formatPubDate(dateFormatted)}</p>
     </Container>
   );
 }

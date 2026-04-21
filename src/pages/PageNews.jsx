@@ -1,7 +1,11 @@
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import Title from "../components/Title";
 
 export default function PageNews() {
+  const location = useLocation();
+  const news = location.state?.newsContent;
+
   return (
     <Container>
       <Header>
@@ -9,59 +13,11 @@ export default function PageNews() {
       </Header>
       <Body>
         <NewsTitle>
-          <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h1>
+          <h1>{news.title}</h1>
           <h2>Data de publicação: 20 de novembro às 16:36</h2>
         </NewsTitle>
         <Text>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent ut
-            volutpat tortor. In dolor tellus, consectetur eget aliquam ut,
-            posuere faucibus lectus. Vestibulum consequat feugiat metus, quis
-            fermentum mauris sollicitudin at. Vivamus turpis velit, accumsan
-            bibendum magna ut, rhoncus mollis felis. Ut felis dui, convallis nec
-            pulvinar sit amet, scelerisque eu sem. Morbi rhoncus diam vehicula
-            lacus gravida, consequat commodo felis laoreet. Integer diam dui,
-            auctor vel nibh non, mattis porta nulla. Ut et hendrerit urna. In
-            hac habitasse platea dictumst. Nunc lacinia in magna eu condimentum.
-          </p>
-          <p>
-            Nulla ac ultrices quam. In quis purus ut turpis porta facilisis quis
-            id ante. Nulla eleifend imperdiet mauris, dictum vehicula magna
-            maximus vitae. Nulla lacus orci, sodales id libero a, luctus rutrum
-            turpis. Nunc nec turpis at mauris hendrerit lobortis sed eu neque.
-            Donec ac ex eu ligula accumsan sollicitudin. Nam ut convallis
-            mauris. Donec lacinia, massa ut laoreet volutpat, ipsum magna
-            pellentesque dui, a ultrices quam nibh vitae risus. Vivamus ac
-            hendrerit mauris, vulputate scelerisque erat.
-          </p>
-          <p>
-            Aliquam tempor a dui eu tempus. Integer dapibus orci sed consequat
-            convallis. Aenean tempor, ante quis vestibulum accumsan, ex enim
-            vestibulum neque, porttitor dignissim ante odio vitae nunc.
-            Suspendisse a blandit orci. Curabitur dui nisl, tempor finibus erat
-            sed, convallis venenatis magna. Mauris non diam mauris. Nulla
-            accumsan finibus lorem, a interdum turpis. Nunc condimentum placerat
-            fringilla. Etiam auctor mauris a elit auctor, non tristique ligula
-            interdum. Donec scelerisque, nibh non egestas ornare, leo metus
-            aliquet diam, non vestibulum tellus dui sed tortor. Fusce luctus leo
-            vitae ex tincidunt, in porttitor sapien blandit.
-          </p>
-          <p>
-            In bibendum tempor suscipit. Fusce egestas, orci eget sollicitudin
-            tristique, massa enim faucibus mi, a sagittis velit ante sit amet
-            sapien. Fusce quis augue risus. Nam at dolor maximus, egestas augue
-            quis, vulputate lorem. Etiam congue ornare aliquam. Aliquam bibendum
-            porttitor cursus. Cras lobortis, risus a dictum consequat, velit
-            ligula ultrices felis, commodo dictum enim felis a libero.
-            Suspendisse elementum fermentum diam. Vestibulum aliquam nisi at
-            lorem aliquam volutpat. Vestibulum dapibus viverra nisi, sed
-            ultrices lacus laoreet at. Sed convallis, purus in rhoncus auctor,
-            magna velit molestie tellus, sit amet laoreet sapien nisi sed massa.
-            Nullam neque eros, cursus sit amet scelerisque sed, gravida nec dui.
-            Aliquam non urna quis urna porta commodo. Nam tincidunt pellentesque
-            augue, vel aliquet est ullamcorper a. Nulla hendrerit rutrum sapien.
-            Maecenas in mauris et lectus aliquam malesuada.
-          </p>
+          <div dangerouslySetInnerHTML={{ __html: news.content }} />
         </Text>
       </Body>
     </Container>
@@ -123,11 +79,28 @@ const Text = styled.div`
   margin-left: 84px;
   margin-right: 84px;
 
-  p {
-    font-size: 13px;
-    font-weight: 100;
-    color: white;
-    margin-bottom: 16px;
-    line-height: 1.6;
+  /* Ajustes de Legibilidade */
+  font-size: 16px; /* 13px é muito pequeno para leitura longa */
+  font-weight: 300; /* 100 pode sumir em telas com pouco brilho */
+  color: #e0e0e0; /* Um branco levemente acinzentado cansa menos o olho */
+
+  line-height: 2; /* Aumentamos para dar mais ar entre as linhas */
+  text-align: justify;
+  white-space: pre-line;
+
+  /* A MÁGICA ESTÁ AQUI: */
+  /* Como o G1 envia muitos \n, vamos tratar o espaçamento de blocos */
+  display: flex;
+  flex-direction: column;
+  gap: 100px; /* Cria um espaço real entre os blocos de texto */
+  text-decoration: none;
+
+  /* Ajuste para imagens que venham no meio do conteúdo */
+  img {
+    max-width: 100%;
+    height: auto;
+    margin: 24px auto;
+    display: block;
+    border-radius: 8px;
   }
 `;
