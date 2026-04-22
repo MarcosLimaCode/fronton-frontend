@@ -1,22 +1,62 @@
-# Fronton
+# Fronton — v0.1
 
-Agregador de notícias com foco em personalização de temas e leitura simplificada.  
-O objetivo é oferecer uma experiência limpa, onde o usuário escolhe os assuntos de interesse e recebe notícias filtradas automaticamente.
+Fronton é um agregador de notícias pensado para leitura limpa e personalização de temas. Esta documentação descreve a versão v0.1 (alpha) do frontend.
 
-## Status do projeto
+## Status
 
-Atualmente em fase de desenvolvimento.
+- Versão: v0.1 (Alpha)
+- Objetivo: interface de consumo de notícias, integração com API de backend e componentes básicos de layout e tema.
 
-## Protótipo (Figma)
+## Principais funcionalidades
 
-https://www.figma.com/design/OvIARZ21I2eJkMNn0MhocX/Fronton?node-id=0-1&t=rONxOFMZy0g8KY19-1
+- Agregação de notícias (consome API REST: GET /news)
+- Página inicial com destaque (MainBox) e listas de cards (SmallBox)
+- Imagem de capa com overlay e blur para melhorar legibilidade dos textos
+- Componentes reutilizáveis: Title, Update, ToNews
+- Configuração via variáveis de ambiente (Vite)
+- Estilização com styled-components
+- Roteamento com react-router
 
-## Deploy (Vercel)
+## Tecnologias
 
-https://fronton-project.vercel.app
+- React
+- Vite
+- Axios
+- styled-components
+- React Router
 
-## Stack prevista
+## Uso
 
-React  
-Node  
-Postgres
+- Página principal (src/pages/Home.jsx) faz uma requisição GET ${API_URL}/news para popular a listagem.
+- O componente MainBox exibe a primeira notícia com imagem de fundo; overlay e blur estão aplicados para garantir contraste do texto.
+- SmallBox são usados para as notícias secundárias.
+
+## Estrutura do projeto (resumo)
+
+- src/pages/Home.jsx — página principal e layout dos cards
+- src/components/Title.jsx — cabeçalho
+- src/components/Update.jsx — componente de atualização/ações
+- src/\* — demais componentes e estilos
+
+## Problemas conhecidos / limitações
+
+- Layout ainda em fase inicial — sem responsividade completa
+- Tratamento de erros na UI pode ser melhorado (atualmente erros são logados no console)
+- Paginação e filtros ainda não implementados
+
+## Roadmap
+
+- v0.2: responsividade, paginação, filtros por tema, testes unitários
+- v1.0: autenticação, preferências do usuário, deploy de produção
+
+## Contribuição
+
+Contribuições são bem-vindas. Abra uma issue ou PR com descrições claras do que foi alterado.
+
+## Licença
+
+MIT
+
+---
+
+Desenvolvedor: Marcos Lima
