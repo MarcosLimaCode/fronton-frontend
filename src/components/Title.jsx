@@ -5,7 +5,7 @@ export default function Title() {
   return (
     <Container>
       <ToHome to="/">
-        <h1>Fronton</h1>
+        <h1>Fronton.</h1>
       </ToHome>
     </Container>
   );
@@ -19,14 +19,10 @@ const Container = styled.div`
 
   h1 {
     text-align: left;
-    font-family: "Chivo Mono", monospace;
+    font-family: "Arimo", sans-serif;
     color: white;
-  }
-
-  p {
-    font-family: "Chivo Mono", monospace;
-    font-size: 12px;
-    color: #656363;
+    font-weight: bold;
+    font-size: 35px;
   }
 `;
 

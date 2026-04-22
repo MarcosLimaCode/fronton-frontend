@@ -13,13 +13,14 @@ function NewsList({ news }) {
 
   return (
     <NewsContainer>
-      {news.slice(8).map((item, index) => (
+      {news.slice(13).map((item, index) => (
         <NewsItem key={index}>
           <SmallBox>
-            <img src={item.imageUrl} />
+            {item?.imageUrl && (
+              <img src={item.imageUrl} alt={item.title || ""} />
+            )}
           </SmallBox>
           <RightSide>
-            <Portal>{item.portal}</Portal>
             <Title
               to={item.link}
               target="_blank"
@@ -28,6 +29,13 @@ function NewsList({ news }) {
             >
               {item.title}
             </Title>
+
+            <Bundle>
+              <Logo>
+                <img src={item.logo} title={item.portal} />
+              </Logo>
+              <Portal>{item.portal}</Portal>
+            </Bundle>
             <NewDate>{formatPubDate(item.publishedAt)}</NewDate>
           </RightSide>
         </NewsItem>
@@ -39,7 +47,7 @@ function NewsList({ news }) {
 export default NewsList;
 
 const NewsContainer = styled.div`
-  width: 850px;
+  width: 1000px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -52,7 +60,7 @@ const NewsItem = styled.div`
   align-items: start;
   height: 100px;
   justify-content: start;
-  padding: 10px 0;
+  padding: 10px;
   border-bottom: 1px solid #585858; /* Borda fina e cinza */
   position: relative;
 `;
@@ -104,6 +112,20 @@ const SmallBox = styled.div`
 const RightSide = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 20px; /* Espaço para a imagem */
-  z-index: 1; /* Garante que o texto fique acima da imagem */
+  margin-left: 20px;
+  z-index: 1;
+`;
+
+const Logo = styled.span`
+  img {
+    height: 15px;
+    width: 15px;
+    margin-right: 5px;
+  }
+`;
+
+const Bundle = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
 `;

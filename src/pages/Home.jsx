@@ -10,6 +10,8 @@ import styled from "styled-components";
 import Title from "../components/Title";
 import { Link } from "react-router-dom";
 import NewsList from "./NewList";
+import JogosHoje from "../components/JogosHoje";
+import { IoRefreshOutline } from "react-icons/io5";
 
 export default function Home() {
   const [news, setNews] = useState([]);
@@ -53,165 +55,138 @@ export default function Home() {
   return (
     <Container>
       <Header>
-        <Title />
-        <Update>
-          <p>Última atualização: {formatPubDate(news?.[0]?.createdAt)}</p>
-        </Update>
+        <HeaderOptions>
+          <Title />
+          <Update>
+            <IoRefreshOutline size={"15"} to={"/refresh"} />
+            <p>Última atualização: {formatPubDate(news?.[0]?.createdAt)}</p>
+          </Update>
+        </HeaderOptions>
       </Header>
       <Body>
-        <LeftSide>
-          <MainBox>
-            <img src={news?.[0]?.imageUrl} />
-            <div className="overlay" />
-            <ToNews
+        <MainBox>
+          {news?.[0]?.imageUrl && (
+            <img src={news?.[0]?.imageUrl} alt={news?.[0]?.title || ""} />
+          )}
+          <ToNews>
+            <MainTitle
+              as={Link}
               to={news?.[0]?.link}
               target="_blank"
               rel="noreferrer"
               title={news?.[0]?.content}
             >
               {news?.[0]?.title}
-            </ToNews>
-            <p title={news?.[0]?.portal}>
-              <img src={news?.[0]?.logo} className="logo" />
-            </p>
-          </MainBox>
+            </MainTitle>
+            <Bundle>
+              {news?.[0]?.logo && (
+                <img
+                  src={news?.[0]?.logo}
+                  alt={news?.[0]?.portal || ""}
+                  className="logo"
+                  title={news?.[0]?.portal}
+                />
+              )}
+              <p>{news?.[0]?.portal}</p>
+            </Bundle>
+            <NewDate>{formatPubDate(news?.[0]?.publishedAt)}</NewDate>
+          </ToNews>
+        </MainBox>
+        <InferiorBar>
           <FirstRow>
-            <FrameBox>
-              <SmallBox>
-                <img src={news?.[1]?.imageUrl} />
-              </SmallBox>
-              <SmallTitle
-                to={news?.[1]?.link}
-                target="_blank"
-                rel="noreferrer"
-                state={{ newsContent: news?.[1] }}
-                title={news?.[1]?.content}
-              >
-                {news?.[1]?.title}
-              </SmallTitle>
-              <p title={news?.[1]?.portal}>
-                <img src={news?.[1]?.logo} className="logo" />
-              </p>
-            </FrameBox>
-            <FrameBox>
-              <SmallBox>
-                <img src={news?.[2]?.imageUrl} />
-              </SmallBox>
-              <SmallTitle
-                to={news?.[2]?.link}
-                target="_blank"
-                rel="noreferrer"
-                state={{ newsContent: news?.[2] }}
-                title={news?.[2]?.content}
-              >
-                {news?.[2]?.title}
-              </SmallTitle>
-              <p title={news?.[2]?.portal}>
-                <img src={news?.[2]?.logo} className="logo" />
-              </p>
-            </FrameBox>
+            {news?.slice(1, 4).map((item, index) => (
+              <LineBox key={index}>
+                {item?.imageUrl && (
+                  <img src={item.imageUrl} alt={item.title || ""} />
+                )}
+                <LeftText>
+                  <BundleBody>
+                    <p title={item?.portal}>{item?.portal}</p>
+                  </BundleBody>
+                  <SmallTitle
+                    to={item?.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    state={{ newsContent: item }}
+                    title={item?.content}
+                  >
+                    {item?.title}
+                  </SmallTitle>
+                </LeftText>
+              </LineBox>
+            ))}
           </FirstRow>
           <SecondRow>
-            <FrameBox>
-              <SmallBox>
-                <img src={news?.[3]?.imageUrl} />
-              </SmallBox>
-              <SmallTitle
-                to={news?.[3]?.link}
-                target="_blank"
-                rel="noreferrer"
-                state={{ newsContent: news?.[3] }}
-                title={news?.[3]?.content}
-              >
-                {news?.[3]?.title}
-              </SmallTitle>
-              <p title={news?.[3]?.portal}>
-                <img src={news?.[3]?.logo} className="logo" />
-              </p>
-            </FrameBox>
-            <FrameBox>
-              <SmallBox>
-                <img src={news?.[4]?.imageUrl} />
-              </SmallBox>
-              <SmallTitle
-                to={news?.[4]?.link}
-                target="_blank"
-                rel="noreferrer"
-                state={{ newsContent: news?.[4] }}
-                title={news?.[4]?.content}
-              >
-                {news?.[4]?.title}
-              </SmallTitle>
-              <p title={news?.[4]?.portal}>
-                <img src={news?.[4]?.logo} className="logo" />
-              </p>
-            </FrameBox>
+            {news?.slice(5, 9).map((item, index) => (
+              <FrameBox key={index}>
+                <SmallBox>
+                  {item?.imageUrl && (
+                    <img src={item.imageUrl} alt={item.title || ""} />
+                  )}
+                </SmallBox>
+                <SmallTitle
+                  to={item?.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  state={{ newsContent: item }}
+                  title={item?.content}
+                >
+                  {item?.title}
+                </SmallTitle>
+                <BundleBody>
+                  <p title={item?.portal}>
+                    {item?.logo && (
+                      <img
+                        src={item.logo}
+                        alt={item.portal || ""}
+                        className="logo"
+                      />
+                    )}
+                    {item?.portal}
+                  </p>
+                </BundleBody>
+              </FrameBox>
+            ))}
           </SecondRow>
+          <ThirdRow>
+            {news?.slice(9, 13).map((item, index) => (
+              <FrameBox key={index}>
+                <SmallBox>
+                  {item?.imageUrl && (
+                    <img src={item.imageUrl} alt={item.title || ""} />
+                  )}
+                </SmallBox>
+                <SmallTitle
+                  to={item?.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  state={{ newsContent: item }}
+                  title={item?.content}
+                >
+                  {item?.title}
+                </SmallTitle>
+                <BundleBody>
+                  <p title={item?.portal}>
+                    {item?.logo && (
+                      <img
+                        src={item.logo}
+                        alt={item.portal || ""}
+                        className="logo"
+                      />
+                    )}
+                    {item?.portal}
+                  </p>
+                </BundleBody>
+              </FrameBox>
+            ))}
+          </ThirdRow>
+          <Soccer>Jogos de Hoje</Soccer>
+          <JogosHoje />
 
           <LastNews>
             <p> Últimas notícias.</p>
           </LastNews>
-        </LeftSide>
-        <RightSide>
-          <FrameSideBox>
-            <SideBox>
-              <img src={news?.[5]?.imageUrl} className="main" />
-              <p title={news?.[5]?.portal}>
-                <img src={news?.[5]?.logo} className="logo" />
-              </p>
-            </SideBox>
-            <SideNews
-              to={news?.[5]?.link}
-              target="_blank"
-              rel="noreferrer"
-              title={news?.[5]?.content}
-            >
-              {news?.[5]?.title}
-            </SideNews>
-            <Portal>
-              <p>{news?.[5]?.portal}</p>
-            </Portal>
-          </FrameSideBox>
-          <FrameSideBox>
-            <SideBox>
-              <img src={news?.[6]?.imageUrl} className="main" />
-              <p title={news?.[6]?.portal}>
-                <img src={news?.[6]?.logo} className="logo" />
-              </p>
-            </SideBox>
-            <SideNews
-              to={news?.[6]?.link}
-              target="_blank"
-              rel="noreferrer"
-              state={{ newsContent: news?.[6] }}
-              title={news?.[6]?.content}
-            >
-              {news?.[6]?.title}
-            </SideNews>
-            <Portal>
-              <p>{news?.[6]?.portal}</p>
-            </Portal>
-          </FrameSideBox>
-          <FrameSideBox>
-            <SideBox>
-              <img src={news?.[7]?.imageUrl} className="main" />
-              <p title={news?.[7]?.portal}>
-                <img src={news?.[7]?.logo} className="logo" />
-              </p>
-            </SideBox>
-            <SideNews
-              to={news?.[7]?.link}
-              target="_blank"
-              rel="noreferrer"
-              title={news?.[7]?.content}
-            >
-              {news?.[7]?.title}
-            </SideNews>
-            <Portal>
-              <p>{news?.[7]?.portal}</p>
-            </Portal>
-          </FrameSideBox>
-        </RightSide>
+        </InferiorBar>
       </Body>
       <Footer>
         <NewsList news={news} />
@@ -244,95 +219,96 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  height: 70px;
-  width: 850px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  border-bottom: 5px solid #ffffff; /* Borda inferior para separar do corpo */
 `;
 
 const Body = styled.div`
   height: max-content;
-  width: 850px;
+  width: 1000px;
   min-height: 1000px;
   display: flex;
+  flex-direction: column;
   align-items: start;
   border-bottom: 5px solid #ffffff; /* Borda superior para separar do título */
+  margin-top: 25px;
 `;
 
 const MainBox = styled.div`
-  position: relative;
-  height: 307px;
-  width: 520px;
   display: flex;
-  font-size: 20px;
-  flex-direction: column;
-  justify-content: end;
+  flex-direction: row;
+  justify-content: start;
   align-items: start;
-  margin-bottom: 18px;
-  border-radius: 12px;
-  background-color: #282828;
-  overflow: hidden;
-  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9), 0 0 12px rgba(0, 0, 0, 0.6);
+  margin-bottom: 50px;
+  margin-top: 18px;
+  padding-bottom: 50px;
+  border-bottom: 1px solid #585858;
 
   img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    z-index: 0;
+    height: 300px;
   }
+`;
 
-  .overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 50%;
-    width: 100%;
-    background: linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.95) 0%,
-      rgba(0, 0, 0, 0.8) 20%,
-      rgba(0, 0, 0, 0.4) 50%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    backdrop-filter: blur(1px);
-    -webkit-backdrop-filter: blur(1px);
+const ToNews = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  font-family: "Merriweather", serif;
+  line-height: 1.3;
+  font-size: 35px;
+  color: white;
+  text-decoration: none;
+  margin-left: 18px;
+`;
 
-    z-index: 1;
-    pointer-events: none;
-    border-radius: 0 0 12px 12px;
-  }
+const Bundle = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  margin-top: 15px;
 
   .logo {
     height: 25px;
     width: 25px;
     margin-right: 5px;
-    position: relative;
-    z-index: 3;
-    margin-bottom: 24px;
-    margin-left: 25px;
-    background-color: #bedd0a;
-    padding: 5px;
-    border-radius: 5px;
+  }
+
+  p {
+    font-family: "Chivo Mono", monospace;
+    font-size: 14px;
+    color: #8c8a8a;
   }
 `;
 
-const ToNews = styled(Link)`
-  font-family: "Merriweather", serif;
-  font-style: italic;
-  color: white;
-  padding: 0px 15px 10px 25px;
+const BundleBody = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+
+  .logo {
+    height: 25px;
+    width: 25px;
+    margin-right: 5px;
+  }
+
+  p {
+    font-family: "Chivo Mono", monospace;
+    font-size: 14px;
+    color: #8c8a8a;
+  }
+`;
+
+const MainTitle = styled(Link)`
   text-decoration: none;
-  position: relative;
-  z-index: 2;
+  color: white;
 `;
 
 const SideNews = styled(Link)`
   font-family: "Merriweather", serif;
-  font-style: italic;
+  line-height: 1.3;
   color: white;
   text-decoration: none;
   margin-top: 10px;
@@ -340,7 +316,6 @@ const SideNews = styled(Link)`
 `;
 
 const LeftSide = styled.div`
-  height: 1000px;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -350,14 +325,24 @@ const LeftSide = styled.div`
 `;
 
 const FirstRow = styled.div`
-  width: 520px;
+  width: 1000px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 18px;
+  border-bottom: 1px solid #585858;
 `;
 
 const SecondRow = styled.div`
+  width: 1000px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: 20px;
+`;
+
+const ThirdRow = styled.div`
   width: 520px;
   display: flex;
   flex-direction: row;
@@ -366,28 +351,28 @@ const SecondRow = styled.div`
 `;
 
 const FrameBox = styled.div`
-  height: 270px;
+  height: 260px;
   width: 232px;
   border-radius: 12px;
-  background-color: #3c3b3b;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: center;
   padding: 10px;
-  position: relative;
 
   .logo {
     height: 25px;
     width: 25px;
     margin-right: 5px;
-    position: absolute;
-    z-index: 3;
     margin-left: 5px;
-    background-color: #bedd0a;
-    padding: 5px;
-    border-radius: 5px;
-    bottom: 20px;
-    left: 10px;
+  }
+
+  p {
+    font-family: "Chivo Mono", monospace;
+    font-size: 12px;
+    color: #8c8a8a;
+    display: flex;
+    align-items: center;
+    justify-content: start;
   }
 `;
 
@@ -398,7 +383,6 @@ const SmallBox = styled.div`
   max-height: 120px;
   width: 232px;
   margin-bottom: 18px;
-  border-radius: 12px;
   background-color: #282828;
 
   img {
@@ -408,7 +392,6 @@ const SmallBox = styled.div`
     min-height: 120px;
     height: 100%;
     width: 100%;
-    border-radius: 12px;
     object-fit: cover;
     z-index: 0;
   }
@@ -416,52 +399,11 @@ const SmallBox = styled.div`
 
 const SmallTitle = styled(Link)`
   font-family: "Merriweather", serif;
-  font-style: italic;
+  line-height: 1.3;
   color: white;
   padding: 0px 15px 10px 5px;
   text-decoration: none;
-  position: relative;
-  z-index: 2;
-`;
-
-const RightSide = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const SideBox = styled.div`
-  height: 200px;
-  width: 321px;
-  margin-bottom: 18px;
-  border-radius: 12px;
-  background-color: #282828;
-  position: relative;
-
-  .main {
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-height: 120px;
-    height: 100%;
-    width: 100%;
-    border-radius: 12px;
-    object-fit: cover;
-    z-index: 0;
-  }
-
-  .logo {
-    height: 25px;
-    width: 25px;
-    margin-right: 5px;
-    position: absolute;
-    z-index: 3;
-    margin-left: 5px;
-    background-color: #bedd0a;
-    padding: 5px;
-    border-radius: 5px;
-    bottom: 20px;
-    left: 10px;
-  }
+  flex: 1;
 `;
 
 const Update = styled.div`
@@ -469,17 +411,12 @@ const Update = styled.div`
   justify-content: space-between;
   align-items: end;
   margin-bottom: 15px;
-
-  h1 {
-    text-align: left;
-    font-family: "Chivo Mono", monospace;
-    color: white;
-  }
+  font-family: "Chivo Mono", monospace;
+  font-size: 12px;
+  color: #656363;
 
   p {
-    font-family: "Chivo Mono", monospace;
-    font-size: 12px;
-    color: #656363;
+    margin-left: 5px;
   }
 `;
 
@@ -540,4 +477,80 @@ const Portal = styled.div`
     font-size: 12px;
     color: #656363;
   }
+`;
+
+const HeaderOptions = styled.div`
+  height: 70px;
+  width: 1000px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const InferiorBar = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const NewDate = styled.span`
+  font-family: "Chivo Mono", monospace;
+  font-size: 12px;
+  color: #464545;
+  margin-right: 20px; /* Espaço entre a data e o título */
+  min-width: 100px;
+  margin-top: 10px; /* Garante alinhamento das datas */
+`;
+
+const Row = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 18px;
+`;
+
+const Soccer = styled.div`
+  font-family: "Arimo", sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  color: white;
+  margin-bottom: 18px;
+  margin-top: 30px;
+`;
+
+const LineBox = styled.div`
+  width: 1000px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 30px;
+  font-size: 15px;
+
+  p {
+    font-family: "Chivo Mono", monospace;
+    font-size: 12px;
+    color: #8c8a8a;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    justify-content: start;
+  }
+
+  img {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+`;
+
+const LeftText = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+  margin-left: 10px;
 `;
