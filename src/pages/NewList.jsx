@@ -60,8 +60,8 @@ const NewsItem = styled.div`
   align-items: start;
   height: 100px;
   justify-content: start;
-  padding: 10px;
-  border-bottom: 1px solid #585858; /* Borda fina e cinza */
+  padding: 10px 0;
+  border-bottom: 1px solid #424141; /* Borda fina e cinza */
   position: relative;
 `;
 
@@ -112,8 +112,8 @@ const SmallBox = styled.div`
 const RightSide = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 20px;
-  z-index: 1;
+  margin-left: 20px; /* Espaço para a imagem */
+  z-index: 1; /* Garante que o texto fique acima da imagem */
 `;
 
 const Logo = styled.span`
