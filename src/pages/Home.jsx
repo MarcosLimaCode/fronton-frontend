@@ -208,7 +208,6 @@ export default function Home() {
               </FrameBox>
             ))}
           </ThirdRow>
-          <Soccer>Jogos de Hoje</Soccer>
           <JogosHoje />
 
           <LastNews>
