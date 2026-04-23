@@ -1,9 +1,5 @@
-import {
-  WiCloud,
-  WiThermometer,
-  WiDaySunny,
-  WiNightClear,
-} from "react-icons/wi";
+import SkeletonHome from "../components/SkeletonHome";
+import { WiCloud } from "react-icons/wi";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import styled from "styled-components";
@@ -15,6 +11,8 @@ import { IoRefreshOutline } from "react-icons/io5";
 
 export default function Home() {
   const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [weather, setWeather] = useState(null);
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   useEffect(() => {
@@ -24,6 +22,8 @@ export default function Home() {
         setNews(response.data);
       } catch (error) {
         console.error("Erro ao carregar notícias:", error);
+      } finally {
+        setLoading(false);
       }
     }
     loadNews();
@@ -38,8 +38,6 @@ export default function Home() {
     return `${day} de ${month} às ${hours}:${minutes}`;
   }
 
-  const [weather, setWeather] = useState(null);
-
   useEffect(() => {
     async function fetchWeather() {
       const response = await fetch(
@@ -51,6 +49,21 @@ export default function Home() {
 
     fetchWeather();
   }, []);
+
+  if (loading)
+    return (
+      <Container>
+        <Header>
+          <HeaderOptions>
+            <Title />
+            <div />
+          </HeaderOptions>
+        </Header>
+        <Body>
+          <SkeletonHome />
+        </Body>
+      </Container>
+    );
 
   return (
     <Container>
@@ -85,6 +98,7 @@ export default function Home() {
                   alt={news?.[0]?.portal || ""}
                   className="logo"
                   title={news?.[0]?.portal}
+                  loading="lazy"
                 />
               )}
               <p>{news?.[0]?.portal}</p>
@@ -97,7 +111,11 @@ export default function Home() {
             {news?.slice(1, 4).map((item, index) => (
               <LineBox key={index}>
                 {item?.imageUrl && (
-                  <img src={item.imageUrl} alt={item.title || ""} />
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title || ""}
+                    loading="lazy"
+                  />
                 )}
                 <LeftText>
                   <BundleBody>
@@ -121,7 +139,11 @@ export default function Home() {
               <FrameBox key={index}>
                 <SmallBox>
                   {item?.imageUrl && (
-                    <img src={item.imageUrl} alt={item.title || ""} />
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title || ""}
+                      loading="lazy"
+                    />
                   )}
                 </SmallBox>
                 <SmallTitle
@@ -140,6 +162,7 @@ export default function Home() {
                         src={item.logo}
                         alt={item.portal || ""}
                         className="logo"
+                        loading="lazy"
                       />
                     )}
                     {item?.portal}
@@ -153,7 +176,11 @@ export default function Home() {
               <FrameBox key={index}>
                 <SmallBox>
                   {item?.imageUrl && (
-                    <img src={item.imageUrl} alt={item.title || ""} />
+                    <img
+                      src={item.imageUrl}
+                      alt={item.title || ""}
+                      loading="lazy"
+                    />
                   )}
                 </SmallBox>
                 <SmallTitle
@@ -172,6 +199,7 @@ export default function Home() {
                         src={item.logo}
                         alt={item.portal || ""}
                         className="logo"
+                        loading="lazy"
                       />
                     )}
                     {item?.portal}

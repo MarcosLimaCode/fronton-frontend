@@ -17,7 +17,7 @@ function NewsList({ news }) {
         <NewsItem key={index}>
           <SmallBox>
             {item?.imageUrl && (
-              <img src={item.imageUrl} alt={item.title || ""} />
+              <img src={item.imageUrl} alt={item.title || ""} loading="lazy" />
             )}
           </SmallBox>
           <RightSide>
@@ -32,7 +32,7 @@ function NewsList({ news }) {
 
             <Bundle>
               <Logo>
-                <img src={item.logo} title={item.portal} />
+                <img src={item.logo} title={item.portal} loading="lazy" />
               </Logo>
               <Portal>{item.portal}</Portal>
             </Bundle>
