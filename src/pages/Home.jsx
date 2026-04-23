@@ -250,7 +250,7 @@ const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
+  width: 100%;
   border-bottom: 5px solid #ffffff; /* Borda inferior para separar do corpo */
 `;
 
