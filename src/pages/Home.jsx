@@ -240,7 +240,7 @@ const Container = styled.div`
   justify-content: start;
   align-items: center;
   min-height: 100%;
-  width: 100vw;
+  width: 100%;
   background-color: #202020;
   position: relative;
   z-index: 0;
