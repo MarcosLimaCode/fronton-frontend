@@ -101,7 +101,7 @@ const SmallBox = styled.div`
 
   img {
     height: 100px;
-    min-width: 200px;
+    width: 200px;
 
     border-radius: 12px;
     object-fit: cover;
