@@ -52,6 +52,8 @@ export default function Home() {
   }, []);
 
   useFetchMissingImages(news, setNews);
+  const cnnNews = news?.filter((item) => item.portal === "CNN Brasil");
+  const otherNews = news?.filter((item) => item.portal !== "CNN Brasil");
 
   if (loading)
     return (
@@ -82,36 +84,40 @@ export default function Home() {
       <Body>
         <MainBox>
           {news?.[0]?.imageUrl && (
-            <img src={news?.[0]?.imageUrl} alt={news?.[0]?.title || ""} />
+            <img
+              src={otherNews?.[0]?.imageUrl}
+              alt={otherNews?.[0]?.title || ""}
+              className="main-image"
+            />
           )}
           <ToNews>
             <MainTitle
               as={Link}
-              to={news?.[0]?.link}
+              to={otherNews?.[0]?.link}
               target="_blank"
               rel="noreferrer"
-              title={news?.[0]?.content}
+              title={otherNews?.[0]?.content}
             >
-              {news?.[0]?.title}
+              {otherNews?.[0]?.title}
             </MainTitle>
             <Bundle>
-              {news?.[0]?.logo && (
+              {otherNews?.[0]?.logo && (
                 <img
-                  src={news?.[0]?.logo}
-                  alt={news?.[0]?.portal || ""}
+                  src={otherNews?.[0]?.logo}
+                  alt={otherNews?.[0]?.portal || ""}
                   className="logo"
-                  title={news?.[0]?.portal}
+                  title={otherNews?.[0]?.portal}
                   loading="lazy"
                 />
               )}
               <p>{news?.[0]?.portal}</p>
             </Bundle>
-            <NewDate>{formatPubDate(news?.[0]?.publishedAt)}</NewDate>
+            <NewDate>{formatPubDate(otherNews?.[0]?.publishedAt)}</NewDate>
           </ToNews>
         </MainBox>
         <InferiorBar>
           <FirstRow>
-            {news?.slice(1, 5).map((item, index) => (
+            {cnnNews?.slice(0, 10).map((item, index) => (
               <LineBox key={index}>
                 <LeftText>
                   <BundleBody>
@@ -131,7 +137,7 @@ export default function Home() {
             ))}
           </FirstRow>
           <SecondRow>
-            {news?.slice(5, 9).map((item, index) => (
+            {otherNews?.slice(1, 5).map((item, index) => (
               <FrameBox key={index}>
                 <SmallBox>
                   {item?.imageUrl && (
@@ -168,7 +174,7 @@ export default function Home() {
             ))}
           </SecondRow>
           <ThirdRow>
-            {news?.slice(9, 13).map((item, index) => (
+            {otherNews?.slice(6, 10).map((item, index) => (
               <FrameBox key={index}>
                 <SmallBox>
                   {item?.imageUrl && (
@@ -210,7 +216,7 @@ export default function Home() {
         </InferiorBar>
       </Body>
       <Footer>
-        <NewsList news={news} />
+        <NewsList otherNews={otherNews} />
       </Footer>
       <Weather>
         {weather && (
@@ -268,8 +274,11 @@ const MainBox = styled.div`
   padding-bottom: 50px;
   border-bottom: 1px solid #585858;
 
-  img {
+  .main-image {
     height: 300px;
+    min-width: 500px;
+    max-width: 520px;
+    object-fit: cover;
   }
 `;
 
@@ -347,11 +356,18 @@ const LeftSide = styled.div`
 
 const FirstRow = styled.div`
   width: 1000px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   margin-bottom: 18px;
   border-bottom: 1px solid #585858;
+
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const SecondRow = styled.div`
@@ -404,18 +420,16 @@ const SmallBox = styled.div`
   margin-bottom: 18px;
   background-color: #282828;
   z-index: 1;
-  overflow: hidden; /* Garante que a imagem não "vaze" das bordas */
+  overflow: hidden;
 
   img {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%; /* Faz a imagem ocupar toda a largura */
-    height: 100%; /* Faz a imagem ocupar toda a altura */
+    width: 100%;
+    height: 100%;
 
-    /* Removemos o max-height que estava limitando a imagem */
-
-    object-fit: cover; /* Mantém a proporção sem distorcer, cortando as sobras */
+    object-fit: cover;
     z-index: 0;
   }
 `;
@@ -570,9 +584,9 @@ const LineBox = styled.div`
 `;
 
 const LeftText = styled.div`
+  min-width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  margin-left: 10px;
 `;

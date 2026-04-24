@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-function NewsList({ news }) {
+function NewsList({ otherNews }) {
   function formatPubDate(createdAt) {
     const date = new Date(createdAt);
     const day = date.getDate();
@@ -13,7 +13,7 @@ function NewsList({ news }) {
 
   return (
     <NewsContainer>
-      {news.slice(13).map((item, index) => (
+      {otherNews.slice(10).map((item, index) => (
         <NewsItem key={index}>
           <SmallBox>
             {item?.imageUrl && (
