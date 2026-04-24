@@ -131,7 +131,7 @@ export default function Home() {
             ))}
           </FirstRow>
           <SecondRow>
-            {news?.slice(3, 7).map((item, index) => (
+            {news?.slice(5, 9).map((item, index) => (
               <FrameBox key={index}>
                 <SmallBox>
                   {item?.imageUrl && (
@@ -168,7 +168,7 @@ export default function Home() {
             ))}
           </SecondRow>
           <ThirdRow>
-            {news?.slice(7, 11).map((item, index) => (
+            {news?.slice(9, 13).map((item, index) => (
               <FrameBox key={index}>
                 <SmallBox>
                   {item?.imageUrl && (
