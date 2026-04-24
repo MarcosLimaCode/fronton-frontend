@@ -16,10 +16,12 @@ export default function SkeletonHome() {
       <FirstRow>
         {[0, 1, 2].map((i) => (
           <LineBox key={i}>
-            <Sk style={{ height: "100px", width: "100px", flexShrink: 0 }} />
             <LeftText>
               <Sk
                 style={{ height: "11px", width: "60px", marginBottom: "8px" }}
+              />
+              <Sk
+                style={{ height: "15px", width: "100%", marginBottom: "6px" }}
               />
               <Sk
                 style={{ height: "15px", width: "100%", marginBottom: "6px" }}
