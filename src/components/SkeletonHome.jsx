@@ -4,6 +4,7 @@ export default function SkeletonHome() {
   return (
     <Container>
       <MainBox>
+        <Sk style={{ height: "300px", width: "520px", flexShrink: 0 }} />
         <ToNews>
           <Sk style={{ height: "28px", width: "100%", marginBottom: "12px" }} />
           <Sk style={{ height: "28px", width: "90%", marginBottom: "12px" }} />
