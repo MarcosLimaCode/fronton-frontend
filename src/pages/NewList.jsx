@@ -102,7 +102,6 @@ const SmallBox = styled.div`
   img {
     height: 100px;
     width: 200px;
-
     border-radius: 12px;
     object-fit: cover;
     z-index: 0;
@@ -112,8 +111,8 @@ const SmallBox = styled.div`
 const RightSide = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 20px; /* Espaço para a imagem */
-  z-index: 1; /* Garante que o texto fique acima da imagem */
+  margin-left: 20px;
+  z-index: 1;
 `;
 
 const Logo = styled.span`
