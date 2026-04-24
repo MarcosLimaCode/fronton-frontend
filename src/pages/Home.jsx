@@ -81,6 +81,9 @@ export default function Home() {
       </Header>
       <Body>
         <MainBox>
+          {news?.[0]?.imageUrl && (
+            <img src={news?.[0]?.imageUrl} alt={news?.[0]?.title || ""} />
+          )}
           <ToNews>
             <MainTitle
               as={Link}
@@ -108,15 +111,8 @@ export default function Home() {
         </MainBox>
         <InferiorBar>
           <FirstRow>
-            {news?.slice(1, 3).map((item, index) => (
+            {news?.slice(1, 5).map((item, index) => (
               <LineBox key={index}>
-                {item?.imageUrl && (
-                  <img
-                    src={item.imageUrl}
-                    alt={item.title || ""}
-                    loading="lazy"
-                  />
-                )}
                 <LeftText>
                   <BundleBody>
                     <p title={item?.portal}>{item?.portal}</p>
