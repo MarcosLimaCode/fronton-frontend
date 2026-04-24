@@ -372,7 +372,7 @@ const ThirdRow = styled.div`
 `;
 
 const FrameBox = styled.div`
-  height: 260px;
+  min-height: 260px;
   width: 232px;
   border-radius: 12px;
   display: flex;
@@ -399,25 +399,26 @@ const FrameBox = styled.div`
 
 const SmallBox = styled.div`
   position: relative;
-
   height: 147px;
-  max-height: 120px;
   width: 232px;
   margin-bottom: 18px;
   background-color: #282828;
+  z-index: 1;
+  overflow: hidden; /* Garante que a imagem não "vaze" das bordas */
 
   img {
     position: absolute;
     top: 0;
     left: 0;
-    min-height: 120px;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
+    width: 100%; /* Faz a imagem ocupar toda a largura */
+    height: 100%; /* Faz a imagem ocupar toda a altura */
+
+    /* Removemos o max-height que estava limitando a imagem */
+
+    object-fit: cover; /* Mantém a proporção sem distorcer, cortando as sobras */
     z-index: 0;
   }
 `;
-
 const SmallTitle = styled(Link)`
   font-family: "Merriweather", serif;
   line-height: 1.3;
