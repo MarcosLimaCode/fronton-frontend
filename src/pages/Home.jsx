@@ -1,3 +1,4 @@
+import { useFetchMissingImages } from "../hooks/useFetchMissingImages";
 import SkeletonHome from "../components/SkeletonHome";
 import { WiCloud } from "react-icons/wi";
 import { useEffect, useState } from "react";
@@ -50,6 +51,8 @@ export default function Home() {
     fetchWeather();
   }, []);
 
+  useFetchMissingImages(news, setNews);
+
   if (loading)
     return (
       <Container>
@@ -78,9 +81,6 @@ export default function Home() {
       </Header>
       <Body>
         <MainBox>
-          {news?.[0]?.imageUrl && (
-            <img src={news?.[0]?.imageUrl} alt={news?.[0]?.title || ""} />
-          )}
           <ToNews>
             <MainTitle
               as={Link}
@@ -108,7 +108,7 @@ export default function Home() {
         </MainBox>
         <InferiorBar>
           <FirstRow>
-            {news?.slice(1, 4).map((item, index) => (
+            {news?.slice(1, 3).map((item, index) => (
               <LineBox key={index}>
                 {item?.imageUrl && (
                   <img
@@ -135,7 +135,7 @@ export default function Home() {
             ))}
           </FirstRow>
           <SecondRow>
-            {news?.slice(5, 9).map((item, index) => (
+            {news?.slice(3, 7).map((item, index) => (
               <FrameBox key={index}>
                 <SmallBox>
                   {item?.imageUrl && (
@@ -172,7 +172,7 @@ export default function Home() {
             ))}
           </SecondRow>
           <ThirdRow>
-            {news?.slice(9, 13).map((item, index) => (
+            {news?.slice(7, 11).map((item, index) => (
               <FrameBox key={index}>
                 <SmallBox>
                   {item?.imageUrl && (
@@ -209,7 +209,6 @@ export default function Home() {
             ))}
           </ThirdRow>
           <JogosHoje />
-
           <LastNews>
             <p> Últimas notícias.</p>
           </LastNews>
@@ -553,7 +552,7 @@ const LineBox = styled.div`
   justify-content: center;
   padding: 10px;
   margin-right: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 50px;
   font-size: 15px;
 
   p {
@@ -568,7 +567,7 @@ const LineBox = styled.div`
 
   img {
     height: 100px;
-    width: 100px;
+    max-width: 150px;
     object-fit: cover;
     margin-right: 10px;
   }

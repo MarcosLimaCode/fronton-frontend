@@ -13,7 +13,7 @@ function NewsList({ news }) {
 
   return (
     <NewsContainer>
-      {news.slice(13).map((item, index) => (
+      {news.slice(11).map((item, index) => (
         <NewsItem key={index}>
           <SmallBox>
             {item?.imageUrl && (
