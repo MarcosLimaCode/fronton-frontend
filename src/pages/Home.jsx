@@ -110,7 +110,7 @@ export default function Home() {
                   loading="lazy"
                 />
               )}
-              <p>{news?.[0]?.portal}</p>
+              <p>{otherNews?.[0]?.portal}</p>
             </Bundle>
             <NewDate>{formatPubDate(otherNews?.[0]?.publishedAt)}</NewDate>
           </ToNews>
