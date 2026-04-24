@@ -208,7 +208,6 @@ export default function Home() {
               </FrameBox>
             ))}
           </ThirdRow>
-          <JogosHoje />
           <LastNews>
             <p> Últimas notícias.</p>
           </LastNews>
@@ -456,7 +455,7 @@ const LastNews = styled.div`
   font-weight: bold;
   font-size: 65px;
   color: white;
-  margin-top: 18px;
+  margin-top: 50px;
 `;
 
 const Weather = styled.div`
