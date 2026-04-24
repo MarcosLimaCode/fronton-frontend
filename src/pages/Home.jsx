@@ -117,7 +117,7 @@ export default function Home() {
         </MainBox>
         <InferiorBar>
           <FirstRow>
-            {cnnNews?.slice(0, 10).map((item, index) => (
+            {cnnNews?.slice(0, 4).map((item, index) => (
               <LineBox key={index}>
                 <LeftText>
                   <BundleBody>
@@ -361,13 +361,7 @@ const FirstRow = styled.div`
 
   display: flex;
   flex-direction: row;
-  overflow-x: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  justify-content: space-between;
 `;
 
 const SecondRow = styled.div`
@@ -584,7 +578,6 @@ const LineBox = styled.div`
 `;
 
 const LeftText = styled.div`
-  min-width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: start;
