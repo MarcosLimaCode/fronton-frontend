@@ -332,7 +332,7 @@ const MainBox = styled.div`
       width: 100%;
       min-width: unset;
       max-width: unset;
-      height: 200px;
+      height: max-content;
     }
   }
 `;

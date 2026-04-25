@@ -31,7 +31,6 @@ function NewsList({ otherNews, isMobile }) {
             >
               {item.title}
             </Title>
-
             <Bundle>
               <Logo>
                 <img src={item.logo} title={item.portal} loading="lazy" />
@@ -89,7 +88,7 @@ const Portal = styled.span`
 const NewDate = styled.span`
   font-family: "Chivo Mono", monospace;
   font-size: 12px;
-  color: #464545;
+  color: #5f5d5d;
   margin-right: 20px;
   min-width: 100px;
   margin-top: 10px;
@@ -98,13 +97,15 @@ const NewDate = styled.span`
 const Title = styled(Link)`
   font-family: "Arimo", sans-serif;
   font-size: 16px;
-  color: #938e8e;
+  color: #c4c1c1;
   margin-top: 10px;
   text-decoration: none;
 
   @media (max-width: 768px) {
-    font-size: 13px;
+    font-family: "Merriweather", serif;
+    line-height: 1.3;
     margin-top: 0;
+    color: #f8f4f4;
   }
 `;
 
@@ -124,8 +125,9 @@ const SmallBox = styled.div`
 
   @media (max-width: 768px) {
     img {
-      width: 120px;
-      height: 80px;
+      width: 150px;
+      height: 100px;
+      border-radius: 0px;
     }
   }
 `;
