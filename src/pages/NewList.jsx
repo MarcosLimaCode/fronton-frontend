@@ -128,7 +128,7 @@ const SmallBox = styled.div`
 
   @media (max-width: 768px) {
     img {
-      width: 100%;
+      width: 350px;
       height: 200px;
       min-width: unset;
       max-width: unset;
