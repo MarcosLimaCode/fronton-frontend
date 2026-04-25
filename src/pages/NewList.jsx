@@ -101,8 +101,8 @@ const NewDate = styled.span`
 const Title = styled(Link)`
   font-family: "Merriweather", serif;
   line-height: 1.3;
-  font-size: 16px;
-  color: #938e8e;
+  font-size: 18px;
+  color: #a7a3a3;
   margin-top: 10px;
   text-decoration: none;
 
