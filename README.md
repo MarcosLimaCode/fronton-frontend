@@ -7,6 +7,10 @@ Fronton é um agregador de notícias focado em leitura limpa e agilidade na info
 - Versão: v0.2 (Beta)
 - Objetivo: Implementar estados de carregamento (Skeletons), integração com dados climáticos e tratamento de falhas em imagens de notícias.
 
+## Versões anteriores
+
+- **v0.1**: Lançamento inicial com agregação básica de feeds RSS e estrutura base em React.
+
 ## Principais Funcionalidades (Análise Técnica)
 
 ### 1. Feedback Visual e Performance
