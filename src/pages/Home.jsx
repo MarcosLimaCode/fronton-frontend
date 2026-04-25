@@ -123,13 +123,24 @@ export default function Home() {
             <NewDate>{formatPubDate(otherNews?.[0]?.publishedAt)}</NewDate>
           </ToNews>
         </MainBox>
-        <InferiorBar>
-          {!isMobile && (
+        {!isMobile && (
+          <InferiorBar>
+            <BundleBody className="cnnSection">
+              <img
+                src={cnnNews[0]?.logo}
+                alt={cnnNews?.[0]?.portal || ""}
+                className="logo"
+                title={cnnNews?.[0]?.portal}
+                loading="lazy"
+              />
+              <p title={cnnNews[0]?.portal}>{cnnNews[0]?.portal}</p>
+            </BundleBody>
+
             <FirstRow>
               {cnnNews?.slice(0, 3).map((item, index) => (
                 <LineBox key={index}>
                   <LeftText>
-                    <SmallTitle
+                    <SmallTitleCnn
                       to={item?.link}
                       target="_blank"
                       rel="noreferrer"
@@ -137,16 +148,15 @@ export default function Home() {
                       title={item?.content}
                     >
                       {item?.title}
-                    </SmallTitle>
-                    <BundleBody>
-                      <p title={item?.portal}>{item?.portal}</p>
-                    </BundleBody>
+                    </SmallTitleCnn>
+
+                    <NewDate>
+                      {formatPubDate(otherNews?.[0]?.publishedAt)}
+                    </NewDate>
                   </LeftText>
                 </LineBox>
               ))}
             </FirstRow>
-          )}
-          {!isMobile && (
             <SecondRow>
               {otherNews?.slice(1, 5).map((item, index) => (
                 <FrameBox key={index}>
@@ -184,8 +194,6 @@ export default function Home() {
                 </FrameBox>
               ))}
             </SecondRow>
-          )}
-          {!isMobile && (
             <ThirdRow>
               {otherNews?.slice(6, 10).map((item, index) => (
                 <FrameBox key={index}>
@@ -223,11 +231,11 @@ export default function Home() {
                 </FrameBox>
               ))}
             </ThirdRow>
-          )}
-          <LastNews>
-            <p> Últimas notícias.</p>
-          </LastNews>
-        </InferiorBar>
+            <LastNews>
+              <p> Últimas notícias.</p>
+            </LastNews>
+          </InferiorBar>
+        )}
       </Body>
       <Footer>
         <NewsList otherNews={otherNews} isMobile={isMobile} />
@@ -385,7 +393,6 @@ const BundleBody = styled.div`
   align-items: center;
   justify-content: start;
   padding-bottom: 10px;
-  border-bottom: 1px solid #585858;
 
   .logo {
     height: 25px;
@@ -478,7 +485,6 @@ const FrameBox = styled.div`
     height: 25px;
     width: 25px;
     margin-right: 5px;
-    margin-left: 5px;
   }
 
   p {
@@ -530,7 +536,7 @@ const SmallTitle = styled(Link)`
   font-family: "Merriweather", serif;
   line-height: 1.5;
   color: white;
-  padding: 0px 15px 10px 5px;
+  padding: 0px 15px 10px 0px;
   text-decoration: none;
   flex: 1;
 
@@ -538,6 +544,15 @@ const SmallTitle = styled(Link)`
     font-size: 13px;
     padding: 0;
   }
+`;
+
+const SmallTitleCnn = styled(Link)`
+  font-family: "Merriweather", serif;
+  line-height: 1.5;
+  color: white;
+  padding: 0px 15px 0px 0px;
+  text-decoration: none;
+  flex: 1;
 `;
 
 const Update = styled.div`
@@ -660,7 +675,6 @@ const LineBox = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  padding: 10px;
   margin-right: 10px;
   margin-bottom: 50px;
   font-size: 15px;
@@ -671,7 +685,6 @@ const LineBox = styled.div`
     color: #8c8a8a;
     display: flex;
     align-items: center;
-    margin-left: 5px;
     justify-content: start;
   }
 
@@ -694,5 +707,4 @@ const LeftText = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  padding-left: 10px;
 `;
