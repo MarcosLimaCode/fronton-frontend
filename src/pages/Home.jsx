@@ -14,7 +14,15 @@ export default function Home() {
   const [news, setNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [weather, setWeather] = useState(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth <= 1024);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }),
+    [];
 
   useEffect(() => {
     async function loadNews() {
@@ -116,13 +124,41 @@ export default function Home() {
           </ToNews>
         </MainBox>
         <InferiorBar>
-          <FirstRow>
-            {cnnNews?.slice(0, 4).map((item, index) => (
-              <LineBox key={index}>
-                <LeftText>
-                  <BundleBody>
-                    <p title={item?.portal}>{item?.portal}</p>
-                  </BundleBody>
+          {!isMobile && (
+            <FirstRow>
+              {cnnNews?.slice(0, 4).map((item, index) => (
+                <LineBox key={index}>
+                  <LeftText>
+                    <BundleBody>
+                      <p title={item?.portal}>{item?.portal}</p>
+                    </BundleBody>
+                    <SmallTitle
+                      to={item?.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      state={{ newsContent: item }}
+                      title={item?.content}
+                    >
+                      {item?.title}
+                    </SmallTitle>
+                  </LeftText>
+                </LineBox>
+              ))}
+            </FirstRow>
+          )}
+          {!isMobile && (
+            <SecondRow>
+              {otherNews?.slice(1, 5).map((item, index) => (
+                <FrameBox key={index}>
+                  <SmallBox>
+                    {item?.imageUrl && (
+                      <img
+                        src={item.imageUrl}
+                        alt={item.title || ""}
+                        loading="lazy"
+                      />
+                    )}
+                  </SmallBox>
                   <SmallTitle
                     to={item?.link}
                     target="_blank"
@@ -132,91 +168,69 @@ export default function Home() {
                   >
                     {item?.title}
                   </SmallTitle>
-                </LeftText>
-              </LineBox>
-            ))}
-          </FirstRow>
-          <SecondRow>
-            {otherNews?.slice(1, 5).map((item, index) => (
-              <FrameBox key={index}>
-                <SmallBox>
-                  {item?.imageUrl && (
-                    <img
-                      src={item.imageUrl}
-                      alt={item.title || ""}
-                      loading="lazy"
-                    />
-                  )}
-                </SmallBox>
-                <SmallTitle
-                  to={item?.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  state={{ newsContent: item }}
-                  title={item?.content}
-                >
-                  {item?.title}
-                </SmallTitle>
-                <BundleBody>
-                  <p title={item?.portal}>
-                    {item?.logo && (
+                  <BundleBody>
+                    <p title={item?.portal}>
+                      {item?.logo && (
+                        <img
+                          src={item.logo}
+                          alt={item.portal || ""}
+                          className="logo"
+                          loading="lazy"
+                        />
+                      )}
+                      {item?.portal}
+                    </p>
+                  </BundleBody>
+                </FrameBox>
+              ))}
+            </SecondRow>
+          )}
+          {!isMobile && (
+            <ThirdRow>
+              {otherNews?.slice(6, 10).map((item, index) => (
+                <FrameBox key={index}>
+                  <SmallBox>
+                    {item?.imageUrl && (
                       <img
-                        src={item.logo}
-                        alt={item.portal || ""}
-                        className="logo"
+                        src={item.imageUrl}
+                        alt={item.title || ""}
                         loading="lazy"
                       />
                     )}
-                    {item?.portal}
-                  </p>
-                </BundleBody>
-              </FrameBox>
-            ))}
-          </SecondRow>
-          <ThirdRow>
-            {otherNews?.slice(6, 10).map((item, index) => (
-              <FrameBox key={index}>
-                <SmallBox>
-                  {item?.imageUrl && (
-                    <img
-                      src={item.imageUrl}
-                      alt={item.title || ""}
-                      loading="lazy"
-                    />
-                  )}
-                </SmallBox>
-                <SmallTitle
-                  to={item?.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  state={{ newsContent: item }}
-                  title={item?.content}
-                >
-                  {item?.title}
-                </SmallTitle>
-                <BundleBody>
-                  <p title={item?.portal}>
-                    {item?.logo && (
-                      <img
-                        src={item.logo}
-                        alt={item.portal || ""}
-                        className="logo"
-                        loading="lazy"
-                      />
-                    )}
-                    {item?.portal}
-                  </p>
-                </BundleBody>
-              </FrameBox>
-            ))}
-          </ThirdRow>
+                  </SmallBox>
+                  <SmallTitle
+                    to={item?.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    state={{ newsContent: item }}
+                    title={item?.content}
+                  >
+                    {item?.title}
+                  </SmallTitle>
+                  <BundleBody>
+                    <p title={item?.portal}>
+                      {item?.logo && (
+                        <img
+                          src={item.logo}
+                          alt={item.portal || ""}
+                          className="logo"
+                          loading="lazy"
+                        />
+                      )}
+                      {item?.portal}
+                    </p>
+                  </BundleBody>
+                </FrameBox>
+              ))}
+            </ThirdRow>
+          )}
           <LastNews>
             <p> Últimas notícias.</p>
           </LastNews>
         </InferiorBar>
       </Body>
       <Footer>
-        <NewsList otherNews={otherNews} />
+        <NewsList otherNews={otherNews} isMobile={isMobile} />
       </Footer>
       <Weather>
         {weather && (
@@ -232,6 +246,9 @@ export default function Home() {
     </Container>
   );
 }
+
+const mobileBreakpoint = "768px";
+const tabletBreakpoint = "1024px";
 
 const Container = styled.div`
   display: flex;
@@ -250,7 +267,25 @@ const Header = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  border-bottom: 5px solid #ffffff; /* Borda inferior para separar do corpo */
+  border-bottom: 5px solid #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #202020;
+`;
+
+const HeaderOptions = styled.div`
+  height: 70px;
+  width: 1000px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    width: 100%;
+    padding: 0 20px;
+    justify-content: center;
+  }
 `;
 
 const Body = styled.div`
@@ -260,8 +295,16 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
-  border-bottom: 5px solid #ffffff; /* Borda superior para separar do título */
+  border-bottom: 5px solid #ffffff;
   margin-top: 25px;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    width: 100%;
+    padding: 0 20px;
+    box-sizing: border-box;
+    min-height: 100px;
+    border-bottom: 0px solid #ffffff;
+  }
 `;
 
 const MainBox = styled.div`
@@ -280,6 +323,18 @@ const MainBox = styled.div`
     max-width: 520px;
     object-fit: cover;
   }
+
+  @media (max-width: ${tabletBreakpoint}) {
+    flex-direction: column;
+    margin-bottom: 0px;
+
+    .main-image {
+      width: 100%;
+      min-width: unset;
+      max-width: unset;
+      height: 200px;
+    }
+  }
 `;
 
 const ToNews = styled.div`
@@ -292,6 +347,16 @@ const ToNews = styled.div`
   color: white;
   text-decoration: none;
   margin-left: 18px;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    font-size: 22px;
+    margin-left: 0;
+    margin-top: 16px;
+  }
+
+  @media (max-width: ${mobileBreakpoint}) {
+    font-size: 18px;
+  }
 `;
 
 const Bundle = styled.div`
@@ -358,10 +423,14 @@ const FirstRow = styled.div`
   width: 1000px;
   margin-bottom: 18px;
   border-bottom: 1px solid #585858;
-
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    width: 100%;
+    flex-direction: column;
+  }
 `;
 
 const SecondRow = styled.div`
@@ -371,6 +440,12 @@ const SecondRow = styled.div`
   justify-content: space-between;
   margin-bottom: 20px;
   margin-top: 20px;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    width: 100%;
+    flex-direction: column;
+    gap: 16px;
+  }
 `;
 
 const ThirdRow = styled.div`
@@ -379,6 +454,12 @@ const ThirdRow = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 20px;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    width: 100%;
+    flex-direction: column;
+    gap: 16px;
+  }
 `;
 
 const FrameBox = styled.div`
@@ -405,6 +486,14 @@ const FrameBox = styled.div`
     align-items: center;
     justify-content: start;
   }
+
+  @media (max-width: ${tabletBreakpoint}) {
+    width: 100%;
+    flex-direction: row;
+    min-height: unset;
+    align-items: center;
+    gap: 12px;
+  }
 `;
 
 const SmallBox = styled.div`
@@ -422,11 +511,18 @@ const SmallBox = styled.div`
     left: 0;
     width: 100%;
     height: 100%;
-
     object-fit: cover;
     z-index: 0;
   }
+
+  @media (max-width: ${tabletBreakpoint}) {
+    width: 120px;
+    height: 80px;
+    flex-shrink: 0;
+    margin-bottom: 0;
+  }
 `;
+
 const SmallTitle = styled(Link)`
   font-family: "Merriweather", serif;
   line-height: 1.3;
@@ -434,6 +530,11 @@ const SmallTitle = styled(Link)`
   padding: 0px 15px 10px 5px;
   text-decoration: none;
   flex: 1;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    font-size: 13px;
+    padding: 0;
+  }
 `;
 
 const Update = styled.div`
@@ -448,6 +549,10 @@ const Update = styled.div`
   p {
     margin-left: 5px;
   }
+
+  @media (max-width: ${tabletBreakpoint}) {
+    display: none;
+  }
 `;
 
 const FrameSideBox = styled.div`
@@ -461,6 +566,11 @@ const LastNews = styled.div`
   font-size: 65px;
   color: white;
   margin-top: 50px;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    font-size: 36px;
+    display: none;
+  }
 `;
 
 const Weather = styled.div`
@@ -475,13 +585,13 @@ const Weather = styled.div`
   }
 
   svg {
-    vertical-align: middle; /* Alinha os ícones ao meio */
-    margin-right: 5px; /* Espaçamento entre o ícone e o texto */
+    vertical-align: middle;
+    margin-right: 5px;
   }
 
   p {
     display: flex;
-    align-items: center; /* Garante alinhamento interno */
+    align-items: center;
   }
 `;
 
@@ -509,27 +619,20 @@ const Portal = styled.div`
   }
 `;
 
-const HeaderOptions = styled.div`
-  height: 70px;
-  width: 1000px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-`;
-
 const InferiorBar = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
 `;
 
 const NewDate = styled.span`
   font-family: "Chivo Mono", monospace;
   font-size: 12px;
   color: #464545;
-  margin-right: 20px; /* Espaço entre a data e o título */
+  margin-right: 20px;
   min-width: 100px;
-  margin-top: 10px; /* Garante alinhamento das datas */
+  margin-top: 10px;
 `;
 
 const Row = styled.div`
@@ -574,6 +677,12 @@ const LineBox = styled.div`
     max-width: 150px;
     object-fit: cover;
     margin-right: 10px;
+  }
+
+  @media (max-width: ${tabletBreakpoint}) {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 16px;
   }
 `;
 

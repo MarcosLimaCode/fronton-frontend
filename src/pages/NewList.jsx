@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-function NewsList({ otherNews }) {
+function NewsList({ otherNews, isMobile }) {
+  const startIndex = isMobile ? 1 : 10;
+
   function formatPubDate(createdAt) {
     const date = new Date(createdAt);
     const day = date.getDate();
@@ -13,7 +15,7 @@ function NewsList({ otherNews }) {
 
   return (
     <NewsContainer>
-      {otherNews.slice(10).map((item, index) => (
+      {otherNews.slice(startIndex).map((item, index) => (
         <NewsItem key={index}>
           <SmallBox>
             {item?.imageUrl && (
@@ -52,6 +54,12 @@ const NewsContainer = styled.div`
   flex-direction: column;
   gap: 10px;
   padding-top: 40px;
+
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 20px 20px 0;
+    box-sizing: border-box;
+  }
 `;
 
 const NewsItem = styled.div`
@@ -61,25 +69,30 @@ const NewsItem = styled.div`
   height: 100px;
   justify-content: start;
   padding: 10px 0;
-  border-bottom: 1px solid #424141; /* Borda fina e cinza */
+  border-bottom: 1px solid #424141;
   position: relative;
+
+  @media (max-width: 768px) {
+    height: auto;
+    gap: 12px;
+  }
 `;
 
 const Portal = styled.span`
   font-family: "Chivo Mono", monospace;
   font-size: 12px;
   color: #e7dfdf;
-  margin-right: 20px; /* Espaço entre a data e o título */
-  min-width: 100px; /* Garante alinhamento das datas */
+  margin-right: 20px;
+  min-width: 100px;
 `;
 
 const NewDate = styled.span`
   font-family: "Chivo Mono", monospace;
   font-size: 12px;
   color: #464545;
-  margin-right: 20px; /* Espaço entre a data e o título */
+  margin-right: 20px;
   min-width: 100px;
-  margin-top: 10px; /* Garante alinhamento das datas */
+  margin-top: 10px;
 `;
 
 const Title = styled(Link)`
@@ -88,16 +101,18 @@ const Title = styled(Link)`
   color: #938e8e;
   margin-top: 10px;
   text-decoration: none;
+
+  @media (max-width: 768px) {
+    font-size: 13px;
+    margin-top: 0;
+  }
 `;
 
 const SmallBox = styled.div`
-  position: absolute;
-  height: auto;
-  width: auto;
+  position: relative;
   margin-bottom: 18px;
   border-radius: 12px;
   background-color: #282828;
-  position: relative;
 
   img {
     height: 100px;
@@ -105,6 +120,13 @@ const SmallBox = styled.div`
     border-radius: 12px;
     object-fit: cover;
     z-index: 0;
+  }
+
+  @media (max-width: 768px) {
+    img {
+      width: 120px;
+      height: 80px;
+    }
   }
 `;
 
