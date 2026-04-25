@@ -74,6 +74,9 @@ const NewsItem = styled.div`
   @media (max-width: 768px) {
     height: auto;
     gap: 12px;
+    padding: 15px 0;
+
+    border-bottom: 0px solid #424141;
   }
 `;
 
@@ -124,9 +127,9 @@ const SmallBox = styled.div`
 
   @media (max-width: 768px) {
     img {
-      width: 150px;
-      height: 100px;
-      border-radius: 0px;
+      height: 50px;
+      width: 80px;
+      border-radius: 5px;
     }
   }
 `;
