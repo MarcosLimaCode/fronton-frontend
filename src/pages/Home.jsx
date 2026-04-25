@@ -268,6 +268,8 @@ const Container = styled.div`
   background-color: #202020;
   position: relative;
   z-index: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
 `;
 
 const Header = styled.div`
