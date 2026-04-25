@@ -99,12 +99,17 @@ const NewDate = styled.span`
 `;
 
 const Title = styled(Link)`
-  font-family: "Merriweather", serif;
+  font-family: "Arimo", sans-serif;
   line-height: 1.3;
   font-size: 18px;
-  color: #a7a3a3;
+  color: #c0bfbf;
   margin-top: 10px;
   text-decoration: none;
+
+  &:hover {
+    color: #fdf9f9;
+    transition: color 0.2s ease;
+  }
 
   @media (max-width: 768px) {
     font-size: 14px;
