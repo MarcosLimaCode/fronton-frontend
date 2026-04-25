@@ -102,8 +102,6 @@ const Title = styled(Link)`
   text-decoration: none;
 
   @media (max-width: 768px) {
-    font-family: "Merriweather", serif;
-    line-height: 1.3;
     margin-top: 0;
     color: #f8f4f4;
   }
