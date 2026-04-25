@@ -63,7 +63,7 @@ const NewsContainer = styled.div`
 
 const NewsItem = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: start;
   height: 100px;
   justify-content: start;
@@ -76,7 +76,7 @@ const NewsItem = styled.div`
     gap: 12px;
     padding: 15px 0;
 
-    border-bottom: 0px solid #424141;
+    border-bottom: 1px solid #2f2f2f;
   }
 `;
 
@@ -127,9 +127,11 @@ const SmallBox = styled.div`
 
   @media (max-width: 768px) {
     img {
-      height: 50px;
-      width: 80px;
-      border-radius: 5px;
+      width: 100%;
+      height: 200px;
+
+      object-fit: cover;
+      border-radius: 10px;
     }
   }
 `;
@@ -139,6 +141,10 @@ const RightSide = styled.div`
   flex-direction: column;
   margin-left: 20px;
   z-index: 1;
+
+  @media (max-width: 768px) {
+    margin-left: 0px;
+  }
 `;
 
 const Logo = styled.span`
