@@ -123,19 +123,17 @@ const SmallBox = styled.div`
     width: 200px;
     border-radius: 12px;
     object-fit: cover;
-    z-index: 0;
   }
 
   @media (max-width: 768px) {
+    width: 100%;
+
     img {
-      min-width: 350px;
       width: 100%;
       height: 200px;
-      min-width: unset;
-      max-width: unset;
-      object-fit: cover;
-
       border-radius: 10px;
+      object-fit: cover;
+      display: block;
     }
   }
 `;
