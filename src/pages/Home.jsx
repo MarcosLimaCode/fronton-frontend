@@ -126,12 +126,9 @@ export default function Home() {
         <InferiorBar>
           {!isMobile && (
             <FirstRow>
-              {cnnNews?.slice(0, 4).map((item, index) => (
+              {cnnNews?.slice(0, 3).map((item, index) => (
                 <LineBox key={index}>
                   <LeftText>
-                    <BundleBody>
-                      <p title={item?.portal}>{item?.portal}</p>
-                    </BundleBody>
                     <SmallTitle
                       to={item?.link}
                       target="_blank"
@@ -141,6 +138,9 @@ export default function Home() {
                     >
                       {item?.title}
                     </SmallTitle>
+                    <BundleBody>
+                      <p title={item?.portal}>{item?.portal}</p>
+                    </BundleBody>
                   </LeftText>
                 </LineBox>
               ))}
@@ -382,6 +382,8 @@ const BundleBody = styled.div`
   display: flex;
   align-items: center;
   justify-content: start;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #585858;
 
   .logo {
     height: 25px;
@@ -465,7 +467,6 @@ const ThirdRow = styled.div`
 const FrameBox = styled.div`
   min-height: 260px;
   width: 232px;
-  border-radius: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -525,7 +526,7 @@ const SmallBox = styled.div`
 
 const SmallTitle = styled(Link)`
   font-family: "Merriweather", serif;
-  line-height: 1.3;
+  line-height: 1.5;
   color: white;
   padding: 0px 15px 10px 5px;
   text-decoration: none;
@@ -691,4 +692,5 @@ const LeftText = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: start;
+  padding-left: 10px;
 `;

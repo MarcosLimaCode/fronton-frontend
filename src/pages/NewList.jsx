@@ -67,7 +67,7 @@ const NewsItem = styled.div`
   align-items: start;
   height: 100px;
   justify-content: start;
-  padding: 10px 0;
+  padding: 20px 0;
   border-bottom: 1px solid #424141;
   position: relative;
 
@@ -88,22 +88,23 @@ const Portal = styled.span`
 const NewDate = styled.span`
   font-family: "Chivo Mono", monospace;
   font-size: 12px;
-  color: #5f5d5d;
+  color: #464545;
   margin-right: 20px;
   min-width: 100px;
   margin-top: 10px;
 `;
 
 const Title = styled(Link)`
-  font-family: "Arimo", sans-serif;
+  font-family: "Merriweather", serif;
+  line-height: 1.3;
   font-size: 16px;
-  color: #c4c1c1;
+  color: #938e8e;
   margin-top: 10px;
   text-decoration: none;
 
   @media (max-width: 768px) {
+    font-size: 14px;
     margin-top: 0;
-    color: #f8f4f4;
   }
 `;
 
