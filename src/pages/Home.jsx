@@ -315,6 +315,7 @@ const MainBox = styled.div`
   margin-bottom: 50px;
   margin-top: 18px;
   padding-bottom: 50px;
+  width: 100%;
   border-bottom: 1px solid #585858;
 
   .main-image {
@@ -330,6 +331,7 @@ const MainBox = styled.div`
 
     .main-image {
       width: 100%;
+      height: max-content;
       min-width: unset;
       max-width: unset;
       object-fit: cover;

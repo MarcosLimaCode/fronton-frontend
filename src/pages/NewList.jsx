@@ -63,7 +63,7 @@ const NewsContainer = styled.div`
 
 const NewsItem = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: start;
   height: 100px;
   justify-content: start;
@@ -73,6 +73,7 @@ const NewsItem = styled.div`
 
   @media (max-width: 768px) {
     height: auto;
+    flex-direction: column;
     gap: 12px;
     padding: 15px 0;
 
@@ -127,10 +128,10 @@ const SmallBox = styled.div`
 
   @media (max-width: 768px) {
     img {
-      width: 100%;
       height: 200px;
-
+      width: 100%;
       object-fit: cover;
+
       border-radius: 10px;
     }
   }
