@@ -150,9 +150,7 @@ export default function Home() {
                       {item?.title}
                     </SmallTitleCnn>
 
-                    <NewDate>
-                      {formatPubDate(otherNews?.[0]?.publishedAt)}
-                    </NewDate>
+                    <NewDate>{formatPubDate(item?.publishedAt)}</NewDate>
                   </LeftText>
                 </LineBox>
               ))}
