@@ -483,6 +483,7 @@ const ThirdRow = styled.div`
 
 const FrameBox = styled.div`
   min-height: 260px;
+  width: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
