@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 function NewsList({ otherNews, isMobile }) {
-  const startIndex = isMobile ? 1 : 10;
+  const startIndex = isMobile ? 0 : 10;
 
   function formatPubDate(createdAt) {
     const date = new Date(createdAt);
@@ -71,7 +71,7 @@ const NewsItem = styled.div`
   border-bottom: 1px solid #424141;
   position: relative;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     height: auto;
     flex-direction: column;
     gap: 12px;
@@ -99,7 +99,7 @@ const NewDate = styled.span`
 `;
 
 const Title = styled(Link)`
-  font-family: "Arimo", sans-serif;
+  font-family: "Merriweather", serif;
   line-height: 1.3;
   font-size: 18px;
   color: #c0bfbf;
@@ -111,9 +111,11 @@ const Title = styled(Link)`
     transition: color 0.2s ease;
   }
 
-  @media (max-width: 768px) {
-    font-size: 14px;
-    margin-top: 0;
+  @media (max-width: 1024px) {
+    color: white;
+    font-size: 18px;
+    margin-left: 0;
+    margin-top: 0px;
   }
 `;
 
@@ -130,7 +132,7 @@ const SmallBox = styled.div`
     object-fit: cover;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     width: 100%;
 
     img {
@@ -149,7 +151,7 @@ const RightSide = styled.div`
   margin-left: 20px;
   z-index: 1;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1024px) {
     margin-left: 0px;
   }
 `;

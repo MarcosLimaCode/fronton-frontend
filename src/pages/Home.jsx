@@ -3,7 +3,7 @@ import SkeletonHome from "../components/SkeletonHome";
 import { WiCloud } from "react-icons/wi";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import Title from "../components/Title";
 import { Link } from "react-router-dom";
 import NewsList from "./NewList";
@@ -63,84 +63,116 @@ export default function Home() {
   const cnnNews = news?.filter((item) => item.portal === "CNN Brasil");
   const otherNews = news?.filter((item) => item.portal !== "CNN Brasil");
 
-  if (loading)
+  if (loading && !isMobile)
     return (
+      <>
+        <HomeBackground />
+        <Container>
+          <Header>
+            <HeaderOptions>
+              <Title />
+              <div />
+            </HeaderOptions>
+          </Header>
+          <Body>
+            <SkeletonHome />
+          </Body>
+        </Container>
+      </>
+    );
+
+  return (
+    <>
+      <HomeBackground />
       <Container>
         <Header>
           <HeaderOptions>
             <Title />
-            <div />
+            <Update>
+              <IoRefreshOutline size={"15"} to={"/refresh"} />
+              <p>Última atualização: {formatPubDate(news?.[0]?.createdAt)}</p>
+            </Update>
           </HeaderOptions>
         </Header>
         <Body>
-          <SkeletonHome />
-        </Body>
-      </Container>
-    );
-
-  return (
-    <Container>
-      <Header>
-        <HeaderOptions>
-          <Title />
-          <Update>
-            <IoRefreshOutline size={"15"} to={"/refresh"} />
-            <p>Última atualização: {formatPubDate(news?.[0]?.createdAt)}</p>
-          </Update>
-        </HeaderOptions>
-      </Header>
-      <Body>
-        <MainBox>
-          {news?.[0]?.imageUrl && (
-            <img
-              src={otherNews?.[0]?.imageUrl}
-              alt={otherNews?.[0]?.title || ""}
-              className="main-image"
-            />
-          )}
-          <ToNews>
-            <MainTitle
-              as={Link}
-              to={otherNews?.[0]?.link}
-              target="_blank"
-              rel="noreferrer"
-              title={otherNews?.[0]?.content}
-            >
-              {otherNews?.[0]?.title}
-            </MainTitle>
-            <Bundle>
-              {otherNews?.[0]?.logo && (
+          <MainBox>
+            {news?.[0]?.imageUrl && (
+              <img
+                src={otherNews?.[0]?.imageUrl}
+                alt={otherNews?.[0]?.title || ""}
+                className="main-image"
+              />
+            )}
+            <ToNews>
+              <MainTitle
+                as={Link}
+                to={otherNews?.[0]?.link}
+                target="_blank"
+                rel="noreferrer"
+                title={otherNews?.[0]?.content}
+              >
+                {otherNews?.[0]?.title}
+              </MainTitle>
+              <Bundle>
+                {otherNews?.[0]?.logo && (
+                  <img
+                    src={otherNews?.[0]?.logo}
+                    alt={otherNews?.[0]?.portal || ""}
+                    className="logo"
+                    title={otherNews?.[0]?.portal}
+                    loading="lazy"
+                  />
+                )}
+                <p>{otherNews?.[0]?.portal}</p>
+              </Bundle>
+              <NewDate>{formatPubDate(otherNews?.[0]?.publishedAt)}</NewDate>
+            </ToNews>
+          </MainBox>
+          {!isMobile && (
+            <InferiorBar>
+              <BundleBody className="cnnSection">
                 <img
-                  src={otherNews?.[0]?.logo}
-                  alt={otherNews?.[0]?.portal || ""}
+                  src={cnnNews[0]?.logo}
+                  alt={cnnNews?.[0]?.portal || ""}
                   className="logo"
-                  title={otherNews?.[0]?.portal}
+                  title={cnnNews?.[0]?.portal}
                   loading="lazy"
                 />
-              )}
-              <p>{otherNews?.[0]?.portal}</p>
-            </Bundle>
-            <NewDate>{formatPubDate(otherNews?.[0]?.publishedAt)}</NewDate>
-          </ToNews>
-        </MainBox>
-        {!isMobile && (
-          <InferiorBar>
-            <BundleBody className="cnnSection">
-              <img
-                src={cnnNews[0]?.logo}
-                alt={cnnNews?.[0]?.portal || ""}
-                className="logo"
-                title={cnnNews?.[0]?.portal}
-                loading="lazy"
-              />
-              <p title={cnnNews[0]?.portal}>{cnnNews[0]?.portal}</p>
-            </BundleBody>
+                <p title={cnnNews[0]?.portal}>{cnnNews[0]?.portal}</p>
+              </BundleBody>
 
-            <FirstRow>
-              {cnnNews?.slice(0, 3).map((item, index) => (
-                <LineBox key={index}>
-                  <LeftText>
-                    <SmallTitleCnn
+              <FirstRow>
+                {cnnNews?.slice(0, 3).map((item, index) => (
+                  <LineBox key={index}>
+                    <LeftText>
+                      <SmallTitleCnn
+                        to={item?.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        state={{ newsContent: item }}
+                        title={item?.content}
+                      >
+                        {item?.title}
+                      </SmallTitleCnn>
+
+                      <NewDate>{formatPubDate(item?.publishedAt)}</NewDate>
+                    </LeftText>
+                  </LineBox>
+                ))}
+              </FirstRow>
+              <SecondRow>
+                {otherNews?.slice(1, 5).map((item, index) => (
+                  <FrameBox key={index}>
+                    <SmallBox>
+                      {item?.imageUrl && (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.title || ""}
+                          loading="lazy"
+                        />
+                      )}
+                    </SmallBox>
+                    <SmallTitle
                       to={item?.link}
                       target="_blank"
                       rel="noreferrer"
@@ -148,108 +180,82 @@ export default function Home() {
                       title={item?.content}
                     >
                       {item?.title}
-                    </SmallTitleCnn>
-
-                    <NewDate>{formatPubDate(item?.publishedAt)}</NewDate>
-                  </LeftText>
-                </LineBox>
-              ))}
-            </FirstRow>
-            <SecondRow>
-              {otherNews?.slice(1, 5).map((item, index) => (
-                <FrameBox key={index}>
-                  <SmallBox>
-                    {item?.imageUrl && (
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title || ""}
-                        loading="lazy"
-                      />
-                    )}
-                  </SmallBox>
-                  <SmallTitle
-                    to={item?.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    state={{ newsContent: item }}
-                    title={item?.content}
-                  >
-                    {item?.title}
-                  </SmallTitle>
-                  <BundleBody>
-                    <p title={item?.portal}>
-                      {item?.logo && (
+                    </SmallTitle>
+                    <BundleBody>
+                      <p title={item?.portal}>
+                        {item?.logo && (
+                          <img
+                            src={item.logo}
+                            alt={item.portal || ""}
+                            className="logo"
+                            loading="lazy"
+                          />
+                        )}
+                        {item?.portal}
+                      </p>
+                    </BundleBody>
+                  </FrameBox>
+                ))}
+              </SecondRow>
+              <ThirdRow>
+                {otherNews?.slice(6, 10).map((item, index) => (
+                  <FrameBox key={index}>
+                    <SmallBox>
+                      {item?.imageUrl && (
                         <img
-                          src={item.logo}
-                          alt={item.portal || ""}
-                          className="logo"
+                          src={item.imageUrl}
+                          alt={item.title || ""}
                           loading="lazy"
                         />
                       )}
-                      {item?.portal}
-                    </p>
-                  </BundleBody>
-                </FrameBox>
-              ))}
-            </SecondRow>
-            <ThirdRow>
-              {otherNews?.slice(6, 10).map((item, index) => (
-                <FrameBox key={index}>
-                  <SmallBox>
-                    {item?.imageUrl && (
-                      <img
-                        src={item.imageUrl}
-                        alt={item.title || ""}
-                        loading="lazy"
-                      />
-                    )}
-                  </SmallBox>
-                  <SmallTitle
-                    to={item?.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    state={{ newsContent: item }}
-                    title={item?.content}
-                  >
-                    {item?.title}
-                  </SmallTitle>
-                  <BundleBody>
-                    <p title={item?.portal}>
-                      {item?.logo && (
-                        <img
-                          src={item.logo}
-                          alt={item.portal || ""}
-                          className="logo"
-                          loading="lazy"
-                        />
-                      )}
-                      {item?.portal}
-                    </p>
-                  </BundleBody>
-                </FrameBox>
-              ))}
-            </ThirdRow>
-            <LastNews>
-              <p> Últimas notícias.</p>
-            </LastNews>
-          </InferiorBar>
-        )}
-      </Body>
-      <Footer>
-        <NewsList otherNews={otherNews} isMobile={isMobile} />
-      </Footer>
-      <Weather>
-        {weather && (
-          <p className="city">
-            São Paulo
-            <WiCloud size={"20"} />
-            {weather.current.temperature_2m}°C Máx:
-            {weather.daily.temperature_2m_max[0]}°C Mín:
-            {weather.daily.temperature_2m_min[0]}°C
-          </p>
-        )}
-      </Weather>
-    </Container>
+                    </SmallBox>
+                    <SmallTitle
+                      to={item?.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      state={{ newsContent: item }}
+                      title={item?.content}
+                    >
+                      {item?.title}
+                    </SmallTitle>
+                    <BundleBody>
+                      <p title={item?.portal}>
+                        {item?.logo && (
+                          <img
+                            src={item.logo}
+                            alt={item.portal || ""}
+                            className="logo"
+                            loading="lazy"
+                          />
+                        )}
+                        {item?.portal}
+                      </p>
+                    </BundleBody>
+                  </FrameBox>
+                ))}
+              </ThirdRow>
+              <LastNews>
+                <p> Últimas notícias.</p>
+              </LastNews>
+            </InferiorBar>
+          )}
+        </Body>
+        <Footer>
+          <NewsList otherNews={otherNews} isMobile={isMobile} />
+        </Footer>
+        <Weather>
+          {weather && (
+            <p className="city">
+              São Paulo
+              <WiCloud size={"20"} />
+              {weather.current.temperature_2m}°C Máx:
+              {weather.daily.temperature_2m_max[0]}°C Mín:
+              {weather.daily.temperature_2m_min[0]}°C
+            </p>
+          )}
+        </Weather>
+      </Container>
+    </>
   );
 }
 
@@ -310,8 +316,9 @@ const Body = styled.div`
     width: 100%;
     padding: 0 20px;
     box-sizing: border-box;
-    min-height: 100px;
+    min-height: 0px;
     border-bottom: 0px solid #ffffff;
+    margin-top: 0px;
   }
 `;
 
@@ -336,6 +343,7 @@ const MainBox = styled.div`
   @media (max-width: ${tabletBreakpoint}) {
     flex-direction: column;
     margin-bottom: 0px;
+    display: none;
 
     .main-image {
       width: 100%;
@@ -460,7 +468,7 @@ const SecondRow = styled.div`
 `;
 
 const ThirdRow = styled.div`
-  width: 520px;
+  width: 1000px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -475,7 +483,6 @@ const ThirdRow = styled.div`
 
 const FrameBox = styled.div`
   min-height: 260px;
-  width: 232px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -508,7 +515,6 @@ const FrameBox = styled.div`
 const SmallBox = styled.div`
   position: relative;
   height: 147px;
-  width: 232px;
   margin-bottom: 18px;
   background-color: #282828;
   z-index: 1;
@@ -548,6 +554,7 @@ const SmallTitle = styled(Link)`
 
 const SmallTitleCnn = styled(Link)`
   font-family: "Merriweather", serif;
+  font-size: 18px;
   line-height: 1.5;
   color: white;
   padding: 0px 15px 0px 0px;
@@ -707,4 +714,11 @@ const LeftText = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: start;
+`;
+
+const HomeBackground = createGlobalStyle`
+  body {
+    background-color: #202020;
+    margin: 0;
+  }
 `;
