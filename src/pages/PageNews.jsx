@@ -87,7 +87,6 @@ export default function PageNews() {
   );
 }
 
-const mobileBreakpoint = "768px";
 const tabletBreakpoint = "1024px";
 
 const Container = styled.div`
@@ -95,9 +94,13 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  min-height: 100vh;
-  width: 100vw;
+  min-height: 100%;
+  width: 100%;
   background-color: #202020;
+  position: relative;
+  z-index: 0;
+  padding-bottom: 0;
+  margin-bottom: 0;
 `;
 
 const Header = styled.div`
