@@ -242,9 +242,11 @@ export default function Home() {
         </Body>
         <Footer>
           <NewsList otherNews={otherNews} isMobile={isMobile} />
-          <AllNews to="/allnews">
-            <p> Ler Mais...</p>
-          </AllNews>
+          {!loading && (
+            <AllNews to="/allnews">
+              <p> Ler Mais...</p>
+            </AllNews>
+          )}
           <Weather>
             {weather && (
               <p className="city">

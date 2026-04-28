@@ -76,6 +76,9 @@ export default function PageNews() {
           </HeaderOptions>
         </Header>
         <Body>
+          <AllNews>
+            <p> Todas as notícias</p>
+          </AllNews>
           <NewsList otherNews={news} isMobile={true} />
         </Body>
       </Container>
@@ -213,4 +216,20 @@ const DayTitle = styled.h2`
   padding: 16px 0;
   border-bottom: 1px solid #2f2f2f;
   margin-bottom: 8px;
+`;
+
+const AllNews = styled.div`
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  font-family: "Arimo", sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+  margin-top: 30px;
+  text-decoration: none;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    justify-content: center;
+  }
 `;
