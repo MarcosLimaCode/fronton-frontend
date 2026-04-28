@@ -1,28 +1,90 @@
 import { useLocation } from "react-router-dom";
-import styled from "styled-components";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import SkeletonAllNews from "../components/SkeletonAllNews";
+import styled, { createGlobalStyle } from "styled-components";
+
 import Title from "../components/Title";
+import NewsList from "./NewList";
+import { IoRefreshOutline } from "react-icons/io5";
 
 export default function PageNews() {
-  const location = useLocation();
-  const news = location.state?.newsContent;
+  const [news, setNews] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth <= 1024);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }),
+    [];
+
+  useEffect(() => {
+    async function loadNews() {
+      try {
+        const response = await axios.get(`${API_URL}/allnews`);
+        setNews(response.data);
+      } catch (error) {
+        console.error("Erro ao carregar notícias:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadNews();
+  }, []);
+
+  function formatPubDate(createdAt) {
+    const date = new Date(createdAt);
+    const day = date.getDate();
+    const month = date.toLocaleString("pt-BR", { month: "long" });
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${day} de ${month} às ${hours}:${minutes}`;
+  }
+
+  if (loading && !isMobile)
+    return (
+      <>
+        <HomeBackground />
+        <Container>
+          <Header>
+            <HeaderOptions>
+              <Title />
+              <div />
+            </HeaderOptions>
+          </Header>
+          <Body>
+            <SkeletonAllNews />
+          </Body>
+        </Container>
+      </>
+    );
 
   return (
-    <Container>
-      <Header>
-        <Title />
-      </Header>
-      <Body>
-        <NewsTitle>
-          <h1>{news.title}</h1>
-          <h2>Data de publicação: 20 de novembro às 16:36</h2>
-        </NewsTitle>
-        <Text>
-          <div dangerouslySetInnerHTML={{ __html: news.content }} />
-        </Text>
-      </Body>
-    </Container>
+    <>
+      <HomeBackground />
+      <Container>
+        <Header>
+          <HeaderOptions>
+            <Title />
+            <Update>
+              <IoRefreshOutline size={"15"} to={"/refresh"} />
+              <p>Última atualização: {formatPubDate(news?.[0]?.createdAt)}</p>
+            </Update>
+          </HeaderOptions>
+        </Header>
+        <Body>
+          <NewsList otherNews={news} isMobile={true} />
+        </Body>
+      </Container>
+    </>
   );
 }
+
+const mobileBreakpoint = "768px";
+const tabletBreakpoint = "1024px";
 
 const Container = styled.div`
   display: flex;
@@ -35,24 +97,18 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-  height: 70px;
-  width: 821px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border-bottom: 5px solid #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #202020;
 `;
 
-const Body = styled.div`
-  height: max-content;
-  width: 821px;
-  font-family: "Merriweather", serif;
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  border-radius: 8px;
-  padding-bottom: 24px;
-  background-color: #282828;
-`;
+const Body = styled.div``;
 
 const NewsTitle = styled.div`
   margin-top: 70px;
@@ -103,4 +159,58 @@ const Text = styled.div`
     display: block;
     border-radius: 8px;
   }
+`;
+
+const Update = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  margin-bottom: 15px;
+  font-family: "Chivo Mono", monospace;
+  font-size: 12px;
+  color: #656363;
+
+  p {
+    margin-left: 5px;
+  }
+
+  @media (max-width: ${tabletBreakpoint}) {
+    display: none;
+  }
+`;
+
+const HeaderOptions = styled.div`
+  height: 70px;
+  width: 1000px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    width: 100%;
+    padding: 0 20px;
+    justify-content: center;
+  }
+`;
+
+const HomeBackground = createGlobalStyle`
+  body {
+    background-color: #202020;
+    margin: 0;
+  }
+`;
+
+const DayGroup = styled.div`
+  width: 100%;
+  margin-bottom: 32px;
+`;
+
+const DayTitle = styled.h2`
+  font-family: "Chivo Mono", monospace;
+  font-size: 12px;
+  color: #656363;
+  font-weight: 400;
+  padding: 16px 0;
+  border-bottom: 1px solid #2f2f2f;
+  margin-bottom: 8px;
 `;

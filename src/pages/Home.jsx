@@ -242,18 +242,21 @@ export default function Home() {
         </Body>
         <Footer>
           <NewsList otherNews={otherNews} isMobile={isMobile} />
+          <AllNews to="/allnews">
+            <p> Ler Mais...</p>
+          </AllNews>
+          <Weather>
+            {weather && (
+              <p className="city">
+                São Paulo
+                <WiCloud size={"20"} />
+                {weather.current.temperature_2m}°C Máx:
+                {weather.daily.temperature_2m_max[0]}°C Mín:
+                {weather.daily.temperature_2m_min[0]}°C
+              </p>
+            )}
+          </Weather>
         </Footer>
-        <Weather>
-          {weather && (
-            <p className="city">
-              São Paulo
-              <WiCloud size={"20"} />
-              {weather.current.temperature_2m}°C Máx:
-              {weather.daily.temperature_2m_max[0]}°C Mín:
-              {weather.daily.temperature_2m_min[0]}°C
-            </p>
-          )}
-        </Weather>
       </Container>
     </>
   );
@@ -600,7 +603,8 @@ const LastNews = styled.div`
 `;
 
 const Weather = styled.div`
-  align-items: end;
+  display: flex;
+  justify-content: center;
   margin-bottom: 10px;
   margin-top: 10px;
 
@@ -721,5 +725,22 @@ const HomeBackground = createGlobalStyle`
   body {
     background-color: #202020;
     margin: 0;
+  }
+`;
+
+const AllNews = styled(Link)`
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  font-family: "Arimo", sans-serif;
+  font-weight: bold;
+  font-size: 25px;
+  color: white;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-decoration: none;
+
+  @media (max-width: ${tabletBreakpoint}) {
+    justify-content: center;
   }
 `;
