@@ -36,6 +36,10 @@ export default function PageNews() {
     loadNews();
   }, []);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   function formatPubDate(createdAt) {
     const date = new Date(createdAt);
     const day = date.getDate();
