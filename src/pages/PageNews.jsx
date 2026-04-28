@@ -13,6 +13,7 @@ export default function PageNews() {
   const [loading, setLoading] = useState(true);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 1024);
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  const otherNews = news?.filter((item) => item.portal !== "CNN Brasil");
 
   useEffect(() => {
     const handler = () => setIsMobile(window.innerWidth <= 1024);
@@ -79,7 +80,7 @@ export default function PageNews() {
           <AllNews>
             <p> Todas as notícias</p>
           </AllNews>
-          <NewsList otherNews={news} isMobile={true} />
+          <NewsList otherNews={otherNews} isMobile={true} index={10} />
         </Body>
       </Container>
     </>
