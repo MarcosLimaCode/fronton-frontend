@@ -120,7 +120,6 @@ export default function Home() {
                     alt={otherNews?.[0]?.portal || ""}
                     className="logo"
                     title={otherNews?.[0]?.portal}
-                    loading="lazy"
                   />
                 )}
                 <p>{otherNews?.[0]?.portal}</p>
@@ -136,7 +135,6 @@ export default function Home() {
                   alt={cnnNews?.[0]?.portal || ""}
                   className="logo"
                   title={cnnNews?.[0]?.portal}
-                  loading="lazy"
                 />
                 <p title={cnnNews[0]?.portal}>{cnnNews[0]?.portal}</p>
               </BundleBody>
@@ -165,11 +163,7 @@ export default function Home() {
                   <FrameBox key={index}>
                     <SmallBox>
                       {item?.imageUrl && (
-                        <img
-                          src={item.imageUrl}
-                          alt={item.title || ""}
-                          loading="lazy"
-                        />
+                        <img src={item.imageUrl} alt={item.title || ""} />
                       )}
                     </SmallBox>
                     <SmallTitle
@@ -188,7 +182,6 @@ export default function Home() {
                             src={item.logo}
                             alt={item.portal || ""}
                             className="logo"
-                            loading="lazy"
                           />
                         )}
                         {item?.portal}
@@ -202,11 +195,7 @@ export default function Home() {
                   <FrameBox key={index}>
                     <SmallBox>
                       {item?.imageUrl && (
-                        <img
-                          src={item.imageUrl}
-                          alt={item.title || ""}
-                          loading="lazy"
-                        />
+                        <img src={item.imageUrl} alt={item.title || ""} />
                       )}
                     </SmallBox>
                     <SmallTitle
@@ -225,7 +214,6 @@ export default function Home() {
                             src={item.logo}
                             alt={item.portal || ""}
                             className="logo"
-                            loading="lazy"
                           />
                         )}
                         {item?.portal}
